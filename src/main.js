@@ -7,7 +7,7 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://dev-craft3-8f0d48babb4d.hyperlane.co'
+axios.defaults.baseURL = process.env.AXIOS_BASE_URL
 
 /* eslint-disable no-new */
 new Vue({
