@@ -3,6 +3,12 @@
 ## Build Setup
 
 ``` bash
+# create .env file in the root directory
+touch .env
+
+# edit .env file (see Environtment Variables for more information)
+nano .env
+
 # install dependencies
 npm install
 
@@ -18,7 +24,7 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## Environtment variables
+## Environtment Variables
 ```
 # Back-End URL to retrieve JSON
 AXIOS_BASE_URL=
