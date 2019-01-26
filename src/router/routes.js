@@ -1,10 +1,16 @@
-import Test from '@/components/Test'
+import Users from '@/components/Users'
+import Topics from '@/components/Topics'
 
 const routes = [
   {
     path: '/',
-    name: 'Test',
-    component: Test
+    name: 'Users',
+    component: Users
+  },
+  {
+    path: '/topics',
+    name: 'Topics',
+    component: Topics
   }
 ]
 

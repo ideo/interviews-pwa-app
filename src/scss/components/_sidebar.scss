@@ -1,0 +1,92 @@
+$sidebar-switcher-bg: #5D635F;
+
+.sidebar {
+  width: 72px;
+
+  @media(min-width: $md) {
+    width: 112px;
+    padding: 16px 0;
+  }
+}
+
+.sidebar__share {
+  cursor: pointer;
+  padding: 20px;
+  order: 2;
+
+  @media(min-width: $md) {
+    order: 0;
+  }
+}
+
+.sidebar__share-icon {
+  width: 25px;
+  display: block;
+}
+
+.sidebar__logo {
+  margin-top: 18px;
+  order: 1;
+}
+
+.sidebar__logo-image {
+  display: block;
+  margin: 0 auto;
+  width: 49px;
+}
+
+.sidebar__switcher-container {
+  height: 64px;
+  width: 100%;
+  margin-top: 8px;
+
+  @media(min-width: $md) {
+    order: 2;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+}
+
+.sidebar__switcher {
+  width: 32px;
+  height: 64px;
+  background-color: $sidebar-switcher-bg;
+  border-radius: 16px;
+  display: block;
+  position: fixed;
+  top: 8px;
+  left: 20px;
+
+  @media(min-width: $md) {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.sidebar__switcher-label {
+  background-color: $white;
+  border-radius: 100%;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  transition: top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  .is-topics & {
+    top: 35px;
+  }
+}
+
+.sidebar__switcher-label-icon {
+  max-width: 100%;
+  display: block;
+}
