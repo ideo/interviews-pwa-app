@@ -59,3 +59,18 @@ typings/
 
 # next.js build output
 .next
+
+# custom rules added by Andrew
+.DS_Store
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
