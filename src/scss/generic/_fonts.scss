@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Circular Sp UI Book';
+  src:  url('/static/fonts/CircularSpUIT-Book.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Circular Sp UI Bold';
+  src:  url('/static/fonts/CircularSpUIT-Bold.ttf') format('truetype');
+}
+
+$font-book: 'Circular Sp UI Book', 'Helvetica', 'Arial', sans-serif;
+$font-bold: 'Circular Sp UI Bold', 'Helvetica', 'Arial', sans-serif;

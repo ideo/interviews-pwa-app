@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-wrap h-100">
     <Sidebar />
-    <div class="layout" />
+    <div class="wrapper is-topics" />
   </div>
 </template>
 
