@@ -530,10 +530,18 @@ export default {
       document.addEventListener('touchend', this.handleTouchEnd, false)
       document.addEventListener('touchmove', this.handleTouchSwipe, false)
     }
+
+    /**
+     * Add event listener for orientation change
+     */
+    window.addEventListener('orientationchange', this.onOrientationChange, false)
   },
 
   beforeDestroy () {
     this.removeEventListeners()
+
+    // Do NOT place "orientationchange" listener in the removeEventListeners() method!
+    document.removeEventListener('orientationchange', this.onOrientationChange)
   },
 
   created: function () {
@@ -590,6 +598,14 @@ export default {
           this.hamburgerHidden = false
         }
       }
+    },
+
+    /**
+     * Orientation Change Listener
+     */
+    onOrientationChange () {
+      // Re-init slick carousel
+      this.reInit()
     }
   }
 }

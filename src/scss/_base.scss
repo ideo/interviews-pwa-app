@@ -54,3 +54,52 @@ button {
     outline: none;
   }
 }
+
+/**
+  Prevent orientation change.
+  Mobile: portrait
+  Tablets and PC: landscape
+ */
+body {
+  @media screen and (max-device-width: 767px) and (orientation: landscape) {
+    &:after {
+      content: 'Portrait Mode Only';
+      color: $white;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      transform: translateY(-50%);
+      display: block;
+      letter-spacing: -0.73px;
+      font-size: 24px;
+      line-height: 27px;
+    }
+  }
+  @media screen and (min-device-width: 768px) and (orientation: portrait) {
+    &:after {
+      content: 'Landscape Mode Only';
+      color: $white;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      transform: translateY(-50%);
+      display: block;
+      letter-spacing: -1.19px;
+      font-size: 30px;
+      line-height: 33px;
+    }
+  }
+
+  #app {
+    @media screen and (max-device-width: 767px) and (orientation: landscape) {
+      display: none !important;
+    }
+    @media screen and (min-device-width: 768px) and (orientation: portrait) {
+      display: none !important;
+    }
+  }
+}
