@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
     id="app"
+    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
   >
     <transition
       v-if="isLoading"

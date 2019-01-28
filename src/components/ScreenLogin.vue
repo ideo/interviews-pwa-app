@@ -15,7 +15,7 @@
           <input
             id="password"
             v-model="password"
-            type="text"
+            type="password"
           >
           <div
             v-if="error"
