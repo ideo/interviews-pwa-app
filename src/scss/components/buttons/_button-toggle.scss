@@ -37,7 +37,7 @@ $button-toggle-switcher-bg: #5D635F;
   position: absolute;
   left: 3px;
   top: 3px;
-  transition: top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-wrap: wrap;
   align-items: center;

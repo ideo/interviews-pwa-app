@@ -39,7 +39,10 @@
       <div
         :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
         class="content">
-        <div class="content__wrapper">
+        <div
+          v-if="isUsersLoaded && isUsers"
+          class="content__wrapper"
+        >
           <slick
             ref="slick"
             :options="slickOptions"
@@ -47,6 +50,8 @@
             @beforeChange="handleBeforeChange"
           >
             <div
+              v-for="user in users"
+              :key="user.title + user.city"
               class="card"
               @scroll="cardScroll"
             >
@@ -68,19 +73,10 @@
               <div class="card__content">
                 <div class="card__content-meta">
                   <div class="card__content-meta-info">
-                    <div class="card__content-meta-title">Andrew</div>
-                    32, Minneapolis
+                    <div class="card__content-meta-title">{{ user.title }}</div>
+                    {{ user.age }}, {{ user.city }}
                   </div>
-                  <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
-                    plays
-                    with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
-                    some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
-                    lose
-                    the sense of humour meanwhile.
-                  </div>
+                  <div class="card__content-meta-description">{{ user.description }}</div>
                 </div>
                 <div class="row text-center">
                   <div class="col-md-6 col-lg-4">
@@ -114,281 +110,6 @@
                       <div class="card__content-video-poster">
                         <img
                           src="/static/demo/users-demo-video-poster-3.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-4.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-5.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-6.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="card"
-              @scroll="cardScroll"
-            >
-              <div class="card__hero">
-                <div class="card__featured">
-                  <img
-                    class="card__featured-image"
-                    src="/static/demo/users-demo-featured-2.jpg"
-                    alt=""
-                  >
-                  <div class="card__featured-meta">
-                    <ButtonPlay/>
-                    <div class="card__featured-meta-title">
-                      My day starts with a search <br>for a new meanings
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card__content">
-                <div class="card__content-meta">
-                  <div class="card__content-meta-info">
-                    <div class="card__content-meta-title">Andrew</div>
-                    32, Minneapolis
-                  </div>
-                  <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
-                    plays
-                    with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
-                    some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
-                    lose
-                    the sense of humour meanwhile.
-                  </div>
-                </div>
-                <div class="row text-center">
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-1.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-2.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-3.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-4.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-5.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-6.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="card"
-              @scroll="cardScroll"
-            >
-              <div class="card__hero">
-                <div class="card__featured">
-                  <img
-                    class="card__featured-image"
-                    src="/static/demo/users-demo-featured-1.jpg"
-                    alt=""
-                  >
-                  <div class="card__featured-meta">
-                    <ButtonPlay/>
-                    <div class="card__featured-meta-title">
-                      My day starts with a search <br>for a new meanings
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card__content">
-                <div class="card__content-meta">
-                  <div class="card__content-meta-info">
-                    <div class="card__content-meta-title">Andrew</div>
-                    32, Minneapolis
-                  </div>
-                  <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
-                    plays
-                    with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
-                    some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
-                    lose
-                    the sense of humour meanwhile.
-                  </div>
-                </div>
-                <div class="row text-center">
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-1.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-2.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-3.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-4.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-5.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-6.jpg"
                           alt=""
                         >
                         <ButtonPlay/>
@@ -402,13 +123,65 @@
             </div>
           </slick>
         </div>
+        <div
+          v-else-if="isTopicsLoaded && !isUsers"
+          class="content__wrapper"
+        >
+          <slick
+            ref="slick"
+            :options="slickOptions"
+            class="content__slider"
+            @beforeChange="handleBeforeChange"
+          >
+            <div
+              v-for="topic in topics"
+              :key="topic.title"
+              class="card"
+              @scroll="cardScroll"
+            >
+              <div class="card__hero">
+                <div class="card__featured">
+                  <img
+                    :src="awsUrl + topic.thumbnail[0].filename"
+                    class="card__featured-image"
+                    alt=""
+                  >
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="card__content-meta">
+                  <div class="card__content-meta-info">
+                    <div class="card__content-meta-title">{{ topic.title }}</div>
+                    0 Mentions
+                  </div>
+                  <div class="card__content-meta-description">{{ topic.description }}</div>
+                </div>
+                <div class="row text-center">
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card__content-video">
+                      <div class="card__content-video-poster">
+                        <img
+                          src="/static/demo/users-demo-video-poster-1.jpg"
+                          alt=""
+                        >
+                        <ButtonPlay/>
+                      </div>
+                      <div class="card__content-video-title">On Community</div>
+                      <div class="card__content-video-duration">02:14</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </slick>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {GET_USERS} from './store/actions/content'
+import {GET_USERS, GET_TOPICS} from './store/actions/content'
 import {mapGetters, mapState} from 'vuex'
 // Vendor
 import iNoBounce from 'inobounce'
@@ -449,8 +222,11 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: true,
-      isMobile: false
+      isStandalone: false,
+      isMobile: false,
+      isUsersLoaded: false,
+      isTopicsLoaded: false,
+      awsUrl: process.env.AWS_URL
     }
   },
 
@@ -461,7 +237,9 @@ export default {
       isAuth: state => state.status.isAuth,
       isLoading: state => state.status.isLoading,
       isShare: state => state.status.isShare,
-      isMobileMenuOpened: state => state.status.isMobileMenuOpened
+      isMobileMenuOpened: state => state.status.isMobileMenuOpened,
+      users: state => state.content.users,
+      topics: state => state.content.topics
     })
   },
 
@@ -554,6 +332,25 @@ export default {
      * Fetch users
      */
     this.$store.dispatch(GET_USERS)
+      .then(response => {
+        this.isUsersLoaded = true
+        this.$store.dispatch(GET_TOPICS)
+          .then(response => {
+            this.isTopicsLoaded = true
+          })
+      })
+  },
+
+  beforeUpdate () {
+    if (this.$refs.slick) {
+      this.$refs.slick.destroy()
+    }
+  },
+
+  updated () {
+    if (this.$refs.slick && !this.$refs.slick.$el.classList.contains('slick-initialized')) {
+      this.$refs.slick.create()
+    }
   },
 
   methods: {

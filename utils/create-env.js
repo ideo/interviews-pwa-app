@@ -1,11 +1,12 @@
-/* 
-  This script reads the `env` vars set from Netlify's UI 
+/*
+  This script reads the `env` vars set from Netlify's UI
   and generates a `.env` file as a build step
 */
 
 const fs = require('fs');
-const contents = 
+const contents =
 `AXIOS_BASE_URL=${process.env.AXIOS_BASE_URL}
+AWS_URL=${process.env.AWS_URL}
 PASSWORD=${process.env.PASSWORD}`;
 
 fs.writeFileSync('./.env', contents)

@@ -1,2 +1,4 @@
 export const GET_USERS = 'GET_USERS'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
+export const GET_TOPICS = 'GET_TOPICS'
+export const GET_TOPICS_SUCCESS = 'GET_TOPICS_SUCCESS'
