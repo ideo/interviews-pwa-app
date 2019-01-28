@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div
+    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
+    id="app"
+  >
     <transition
       v-if="isLoading"
       :duration="1000"
@@ -23,7 +26,7 @@
       <ScreenPlaceholder/>
     </div>
     <div
-      v-else-if="isAuth && (isStandalone || !isMobile)"
+      v-else-if="(isAuth && isStandalone) || (isAuth && !isMobile)"
       :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
       class="h-100"
     >

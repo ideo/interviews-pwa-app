@@ -106,4 +106,10 @@ body {
       display: none !important;
     }
   }
+
+  .is-placeholder-screen {
+    display: block !important;
+    position: relative;
+    z-index: 60;
+  }
 }
