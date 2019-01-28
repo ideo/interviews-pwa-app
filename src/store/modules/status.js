@@ -1,12 +1,13 @@
 /* eslint-disable promise/param-names */
-import {CLOSE_SHARE_SCREEN, LOGIN, OPEN_SHARE_SCREEN, SET_CURRENT_MODULE, TOGGLE_MOBILE_MENU} from '../actions/status'
+import {CLOSE_SHARE_SCREEN, LOGIN, OPEN_SHARE_SCREEN, SET_CURRENT_MODULE, TOGGLE_MOBILE_MENU, TOGGLE_SLICK_STATUS} from '../actions/status'
 
 const state = {
   isAuth: localStorage.getItem('isAuth') ? parseInt(localStorage.getItem('isAuth')) : 0,
   isUsers: localStorage.getItem('isUsers') ? parseInt(localStorage.getItem('isUsers')) : 1,
   isLoading: false,
   isShare: false,
-  isMobileMenuOpened: false
+  isMobileMenuOpened: false,
+  slickInited: false
 }
 
 const getters = {
@@ -14,7 +15,8 @@ const getters = {
   isAuth: state => state.isAuth,
   isLoading: state => state.isLoading,
   isShare: state => state.isShare,
-  isMobileMenuOpened: state => state.isMobileMenuOpened
+  isMobileMenuOpened: state => state.isMobileMenuOpened,
+  slickInited: state => state.slickInited
 }
 
 const actions = {}
@@ -40,6 +42,9 @@ const mutations = {
   },
   [TOGGLE_MOBILE_MENU]: (state, payload) => {
     state.isMobileMenuOpened = payload
+  },
+  [TOGGLE_SLICK_STATUS]: (state, payload) => {
+    state.slickInited = payload
   }
 }
 

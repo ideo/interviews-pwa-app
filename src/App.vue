@@ -83,32 +83,6 @@
                     <div class="card__content-video">
                       <div class="card__content-video-poster">
                         <img
-                          src="/static/demo/users-demo-video-poster-1.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-2.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On the Sense of Belonging</div>
-                      <div class="card__content-video-duration">01:15</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
                           src="/static/demo/users-demo-video-poster-3.jpg"
                           alt=""
                         >
@@ -152,24 +126,12 @@
                 <div class="card__content-meta">
                   <div class="card__content-meta-info">
                     <div class="card__content-meta-title">{{ topic.title }}</div>
-                    0 Mentions
+                    {{ topic.videos[0].length }} Mentions
                   </div>
                   <div class="card__content-meta-description">{{ topic.description }}</div>
                 </div>
                 <div class="row text-center">
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-1.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Community</div>
-                      <div class="card__content-video-duration">02:14</div>
-                    </div>
-                  </div>
+                  Empty
                 </div>
               </div>
             </div>
@@ -182,6 +144,7 @@
 
 <script>
 import {GET_USERS, GET_TOPICS} from './store/actions/content'
+import {TOGGLE_SLICK_STATUS} from './store/actions/status'
 import {mapGetters, mapState} from 'vuex'
 // Vendor
 import iNoBounce from 'inobounce'
@@ -222,7 +185,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isUsersLoaded: false,
       isTopicsLoaded: false,
@@ -239,7 +202,8 @@ export default {
       isShare: state => state.status.isShare,
       isMobileMenuOpened: state => state.status.isMobileMenuOpened,
       users: state => state.content.users,
-      topics: state => state.content.topics
+      topics: state => state.content.topics,
+      slickInited: state => state.status.slickInited
     })
   },
 
@@ -342,7 +306,7 @@ export default {
   },
 
   beforeUpdate () {
-    if (this.$refs.slick) {
+    if (this.$refs.slick && !this.slickInited) {
       this.$refs.slick.destroy()
     }
   },
@@ -350,6 +314,7 @@ export default {
   updated () {
     if (this.$refs.slick && !this.$refs.slick.$el.classList.contains('slick-initialized')) {
       this.$refs.slick.create()
+      this.$store.commit(TOGGLE_SLICK_STATUS, 1)
     }
   },
 

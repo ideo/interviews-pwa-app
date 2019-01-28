@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {SET_CURRENT_MODULE} from '../store/actions/status'
+import {SET_CURRENT_MODULE, TOGGLE_SLICK_STATUS} from '../store/actions/status'
 import {mapGetters, mapState} from 'vuex'
 
 export default {
@@ -44,6 +44,7 @@ export default {
   methods: {
     toggleContent () {
       this.$store.commit(SET_CURRENT_MODULE, this.isUsers ? 0 : 1)
+      this.$store.commit(TOGGLE_SLICK_STATUS, 0)
       this.switcherLabelIconUrl = this.isUsers ? '/static/images/icon-user.svg' : '/static/images/icon-star.svg'
     }
   }
