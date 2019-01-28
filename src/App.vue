@@ -23,7 +23,7 @@
       <ScreenPlaceholder/>
     </div>
     <div
-      v-else-if="isStandalone || !isMobile"
+      v-else-if="isAuth && (isStandalone || !isMobile)"
       :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
       class="h-100"
     >
