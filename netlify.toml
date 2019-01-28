@@ -1,2 +1,0 @@
-[context.production]
-  environment = { PASSWORD = "interviews", AXIOS_BASE_URL = "//dev-craft3-8f0d48babb4d.hyperlane.co/" }
