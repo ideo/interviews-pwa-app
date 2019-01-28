@@ -27,6 +27,7 @@
       :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
       class="h-100"
     >
+      <MobileMenu/>
       <ScreenShare v-if="isShare"/>
       <ButtonHamburger/>
       <ButtonShare/>
@@ -509,7 +510,7 @@ export default {
         let xDiff = this.xDown - xUp
         let yDiff = this.yDown - yUp
 
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (Math.abs(xDiff) > Math.abs(yDiff) && !this.isMobileMenuOpened) {
           if (xDiff > 0) {
             if (!this.sidebarHidden) {
               this.sidebarHidden = true

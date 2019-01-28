@@ -1,0 +1,41 @@
+.mobile-menu {
+  background-color: $green;
+  font-size: 30px;
+  line-height: 42px;
+  letter-spacing: -0.73px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding-top: 64px;
+  height: 182px;
+  transform: translateY(-182px);
+  transition: transform 200ms ease;
+  overflow: hidden;
+
+  .is-mobile-menu-opened & {
+    transform: translateY(0px);
+  }
+
+  @media(min-width: 375px) {
+    font-size: 48px;
+    line-height: 68px;
+    padding-top: 70px;
+    height: 240px;
+    transform: translateY(-240px);
+  }
+
+  @media(min-width: $lg) {
+    display: none;
+  }
+}
+
+.mobile-menu__item {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border-top: 1px solid $white;
+  color: $white;
+  padding: 8px 0;
+}

@@ -21,6 +21,12 @@
 }
 
 .sidebar__logo {
+  transition: transform 200ms ease;
+
+  .is-mobile-menu-opened & {
+    transform: translateY(90px);
+  }
+
   @media(min-width: $lg) {
     margin-top: 18px;
   }
