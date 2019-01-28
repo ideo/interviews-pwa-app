@@ -449,7 +449,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false
     }
   },
@@ -480,7 +480,9 @@ export default {
      * Handle swipe for mobile version
      */
     if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 992) {
-      iNoBounce.enable()
+      if(getMobileOperatingSystem() === 'iOS') {
+        iNoBounce.enable()
+      }
 
       this.xDown = null
       this.yDown = null
