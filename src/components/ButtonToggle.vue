@@ -1,7 +1,7 @@
 <template>
   <div class="button-toggle d-none d-lg-block">
     <button
-      :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
+      :class="{ 'is-topics': !isUsers }"
       class="button-toggle__switcher"
       @click.prevent="toggleContent"
     >
