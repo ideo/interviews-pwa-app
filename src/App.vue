@@ -446,7 +446,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false
     }
   },
@@ -510,7 +510,7 @@ export default {
         let xDiff = this.xDown - xUp
         let yDiff = this.yDown - yUp
 
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (Math.abs(xDiff) > Math.abs(yDiff) && !this.isMobileMenuOpened) {
           if (xDiff > 0) {
             if (!this.sidebarHidden) {
               this.sidebarHidden = true

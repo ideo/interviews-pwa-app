@@ -36,6 +36,12 @@
       display: none;
     }
   }
+
+  .is-mobile-menu-opened & {
+    &:after {
+      display: block;
+    }
+  }
 }
 
 .content__wrapper {
