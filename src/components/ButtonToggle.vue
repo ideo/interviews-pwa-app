@@ -1,16 +1,16 @@
 <template>
-  <div class="toggle-button d-none d-lg-block">
+  <div class="button-toggle d-none d-lg-block">
     <button
       :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
-      class="toggle-button__switcher"
+      class="button-toggle__switcher"
       @click.prevent="toggleContent"
     >
-      <div class="toggle-button__switcher-label">
+      <div class="button-toggle__switcher-label">
         <img
           v-if="switcherLabelIconUrl !== ''"
           :src="switcherLabelIconUrl"
           alt=""
-          class="toggle-button__switcher-icon"
+          class="button-toggle__switcher-icon"
         >
       </div>
     </button>
@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import {SET_CURRENT_MODULE} from '../store/actions/content'
+import {SET_CURRENT_MODULE} from '../store/actions/status'
 import {mapGetters, mapState} from 'vuex'
 
 export default {
-  name: 'ToggleButton',
+  name: 'ButtonToggle',
 
   data () {
     return {
@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapGetters(['isUsers']),
     ...mapState({
-      isUsers: state => state.content.isUsers
+      isUsers: state => state.status.isUsers
     })
   },
 

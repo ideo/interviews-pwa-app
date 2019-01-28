@@ -1,6 +1,6 @@
-$toggle-button-switcher-bg: #5D635F;
+$button-toggle-switcher-bg: #5D635F;
 
-.toggle-button {
+.button-toggle {
   height: 64px;
   position: fixed;
   bottom: 40px;
@@ -9,10 +9,10 @@ $toggle-button-switcher-bg: #5D635F;
   transition: transform 200ms ease;
 }
 
-.toggle-button__switcher {
+.button-toggle__switcher {
   width: 32px;
   height: 64px;
-  background-color: $toggle-button-switcher-bg;
+  background-color: $button-toggle-switcher-bg;
   border-radius: 16px;
   display: block;
   position: fixed;
@@ -28,7 +28,7 @@ $toggle-button-switcher-bg: #5D635F;
   }
 }
 
-.toggle-button__switcher-label {
+.button-toggle__switcher-label {
   background-color: $white;
   border-radius: 100%;
   width: 26px;
@@ -48,7 +48,7 @@ $toggle-button-switcher-bg: #5D635F;
   }
 }
 
-.toggle-button__switcher-icon {
+.button-toggle__switcher-icon {
   max-width: 100%;
   display: block;
 }

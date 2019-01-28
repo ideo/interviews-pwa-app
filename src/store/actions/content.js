@@ -1,4 +1,2 @@
-export const LOGIN = 'LOGIN'
-export const SET_CURRENT_MODULE = 'SET_CURRENT_MODULE'
 export const GET_USERS = 'GET_USERS'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'

@@ -2,7 +2,9 @@
   <div
     class="screen-login"
   >
-    <div class="d-flex flex-wrap justify-content-center align-items-center h-100">
+    <div
+      class="d-flex flex-wrap justify-content-center align-items-center h-100"
+    >
       <div>
         <form
           class="screen-login__form"
@@ -28,10 +30,10 @@
 </template>
 
 <script>
-import { LOGIN } from '../store/actions/content'
+import {LOGIN} from '../store/actions/status'
 
 export default {
-  name: 'LoginScreen',
+  name: 'ScreenLogin',
 
   data () {
     return {

@@ -1,37 +1,37 @@
 <template>
   <div id="app">
+    <transition
+      v-if="isLoading"
+      :duration="1000"
+      name="screen-animation"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+      mode="out-in"
+    >
+      <div
+        v-if="isLoading && isAuth"
+        class="screen-loading"
+      />
+    </transition>
     <div
-      v-if="(!isAuth && isStandalone) || (!isAuth && !isStandalone && !isMobile)"
+      v-else-if="(!isAuth && isStandalone) || (!isAuth && !isStandalone && !isMobile)"
       class="screen-login"
     >
-      <LoginScreen/>
+      <ScreenLogin/>
     </div>
-    <div
-      v-else-if="!isStandalone && isMobile"
-    >
-      <PlaceholderScreen/>
+    <div v-else-if="!isStandalone && isMobile">
+      <ScreenPlaceholder/>
     </div>
     <div
       v-else-if="isStandalone || !isMobile"
-      :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden }"
+      :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
       class="h-100"
     >
-      <div
-        class="hamburger d-lg-none"
-      >
-        <span/>
-        <span/>
-        <span/>
-      </div>
-      <div class="share-button d-none d-lg-block">
-        <img
-          src="/static/images/icon-share.svg"
-          class="share-button__icon"
-          alt=""
-        >
-      </div>
-      <Sidebar />
-      <ToggleButton />
+      <ScreenShare v-if="isShare"/>
+      <ButtonHamburger/>
+      <ButtonShare/>
+      <ButtonToggle/>
+      <Sidebar/>
       <div
         :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
         class="content">
@@ -54,7 +54,7 @@
                     alt=""
                   >
                   <div class="card__featured-meta">
-                    <PlayButton/>
+                    <ButtonPlay/>
                     <div class="card__featured-meta-title">
                       My day starts with a search <br>for a new meanings
                     </div>
@@ -68,9 +68,13 @@
                     32, Minneapolis
                   </div>
                   <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and plays with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont lose
+                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
+                    plays
+                    with
+                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
+                    some
+                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
+                    lose
                     the sense of humour meanwhile.
                   </div>
                 </div>
@@ -82,7 +86,7 @@
                           src="/static/demo/users-demo-video-poster-1.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -95,7 +99,7 @@
                           src="/static/demo/users-demo-video-poster-2.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -108,7 +112,7 @@
                           src="/static/demo/users-demo-video-poster-3.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -121,7 +125,7 @@
                           src="/static/demo/users-demo-video-poster-4.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -134,7 +138,7 @@
                           src="/static/demo/users-demo-video-poster-5.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -147,7 +151,7 @@
                           src="/static/demo/users-demo-video-poster-6.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -168,7 +172,7 @@
                     alt=""
                   >
                   <div class="card__featured-meta">
-                    <PlayButton/>
+                    <ButtonPlay/>
                     <div class="card__featured-meta-title">
                       My day starts with a search <br>for a new meanings
                     </div>
@@ -182,9 +186,13 @@
                     32, Minneapolis
                   </div>
                   <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and plays with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont lose
+                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
+                    plays
+                    with
+                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
+                    some
+                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
+                    lose
                     the sense of humour meanwhile.
                   </div>
                 </div>
@@ -196,7 +204,7 @@
                           src="/static/demo/users-demo-video-poster-1.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -209,7 +217,7 @@
                           src="/static/demo/users-demo-video-poster-2.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -222,7 +230,7 @@
                           src="/static/demo/users-demo-video-poster-3.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -235,7 +243,7 @@
                           src="/static/demo/users-demo-video-poster-4.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -248,7 +256,7 @@
                           src="/static/demo/users-demo-video-poster-5.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -261,7 +269,7 @@
                           src="/static/demo/users-demo-video-poster-6.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -282,7 +290,7 @@
                     alt=""
                   >
                   <div class="card__featured-meta">
-                    <PlayButton/>
+                    <ButtonPlay/>
                     <div class="card__featured-meta-title">
                       My day starts with a search <br>for a new meanings
                     </div>
@@ -296,9 +304,13 @@
                     32, Minneapolis
                   </div>
                   <div class="card__content-meta-description">
-                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and plays with
-                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared some
-                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont lose
+                    Andrew loves his work, cats and athletic past. He listens to Metallica on the max volume and
+                    plays
+                    with
+                    his kinds while secretly listening to podcasts (and feeling quite guilty about it). He shared
+                    some
+                    thoughts on how to enjoy your music preferences, do proper tailgating before the show and dont
+                    lose
                     the sense of humour meanwhile.
                   </div>
                 </div>
@@ -310,7 +322,7 @@
                           src="/static/demo/users-demo-video-poster-1.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -323,7 +335,7 @@
                           src="/static/demo/users-demo-video-poster-2.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -336,7 +348,7 @@
                           src="/static/demo/users-demo-video-poster-3.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -349,7 +361,7 @@
                           src="/static/demo/users-demo-video-poster-4.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Community</div>
                       <div class="card__content-video-duration">02:14</div>
@@ -362,7 +374,7 @@
                           src="/static/demo/users-demo-video-poster-5.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On the Sense of Belonging</div>
                       <div class="card__content-video-duration">01:15</div>
@@ -375,7 +387,7 @@
                           src="/static/demo/users-demo-video-poster-6.jpg"
                           alt=""
                         >
-                        <PlayButton/>
+                        <ButtonPlay/>
                       </div>
                       <div class="card__content-video-title">On Self-Discipline</div>
                       <div class="card__content-video-duration">00:43</div>
@@ -394,19 +406,15 @@
 <script>
 import {GET_USERS} from './store/actions/content'
 import {mapGetters, mapState} from 'vuex'
-import Slick from './helpers/slick'
-import LoginScreen from './components/LoginScreen'
-import ShareScreen from './components/ShareScreen'
-import PlaceholderScreen from './components/PlaceholderScreen'
-import ToggleButton from './components/ToggleButton'
-import Sidebar from './components/Sidebar'
+// Vendor
 import iNoBounce from 'inobounce'
 import getMobileOperatingSystem from './helpers/detectMobileOperatingSystem'
+import Slick from './helpers/slick'
 
 export default {
   name: 'App',
 
-  components: {ToggleButton, Slick, LoginScreen, ShareScreen, PlaceholderScreen, Sidebar},
+  components: {Slick},
 
   data () {
     return {
@@ -437,20 +445,26 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false
     }
   },
 
   computed: {
-    ...mapGetters(['isUsers', 'isAuth']),
+    ...mapGetters(['isUsers', 'isAuth', 'isLoading', 'isShare', 'isMobileMenuOpened']),
     ...mapState({
-      isUsers: state => state.content.isUsers,
-      isAuth: state => state.content.isAuth
+      isUsers: state => state.status.isUsers,
+      isAuth: state => state.status.isAuth,
+      isLoading: state => state.status.isLoading,
+      isShare: state => state.status.isShare,
+      isMobileMenuOpened: state => state.status.isMobileMenuOpened
     })
   },
 
   mounted () {
+    /**
+     * Check if mobile & standalone on render
+     */
     if (getMobileOperatingSystem() !== 'unknown') {
       this.isMobile = true
       if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone)) {
@@ -458,6 +472,9 @@ export default {
       }
     }
 
+    /**
+     * Handle swipe for mobile version
+     */
     if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 992) {
       iNoBounce.enable()
 
@@ -519,10 +536,16 @@ export default {
   },
 
   created: function () {
+    /**
+     * Fetch users
+     */
     this.$store.dispatch(GET_USERS)
   },
 
   methods: {
+    /**
+     * Slick carousel methods goes below
+     */
     next () {
       this.$refs.slick.next()
     },
@@ -537,10 +560,13 @@ export default {
       })
     },
 
+    /**
+     * Scroll top of the card when slide change (mobile only)
+     */
     handleBeforeChange (event, slick, currentSlide, nextSlide) {
       if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 992) {
         setTimeout(() => {
-          document.getElementsByClassName('card')[currentSlide].scroll({ top: 0, left: 0, behavior: 'smooth' })
+          document.getElementsByClassName('card')[currentSlide].scroll({top: 0, left: 0, behavior: 'smooth'})
         }, 300)
       }
     },
@@ -551,6 +577,10 @@ export default {
       document.removeEventListener('touchmove', this.handleTouchSwipe)
     },
 
+    /**
+     * Toggle Hamburger at card scroll (mobile only)
+     * @param event
+     */
     cardScroll (event) {
       if (screen.availWidth < 992) {
         if (event.target.scrollTop > 50) {

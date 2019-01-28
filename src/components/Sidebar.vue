@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {SET_CURRENT_MODULE} from '../store/actions/content'
+import {SET_CURRENT_MODULE} from '../store/actions/status'
 import {mapGetters, mapState} from 'vuex'
 
 export default {
@@ -26,7 +26,7 @@ export default {
   computed: {
     ...mapGetters(['isUsers']),
     ...mapState({
-      isUsers: state => state.content.isUsers
+      isUsers: state => state.status.isUsers
     })
   },
 

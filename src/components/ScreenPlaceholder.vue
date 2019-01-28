@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'PlaceholderScreen'
+  name: 'ScreenPlaceholder'
 }
 </script>

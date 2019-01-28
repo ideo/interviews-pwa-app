@@ -1,10 +1,23 @@
+/**
+  Import fonts
+ */
 @import "generic/fonts";
+/**
+  Import vendor
+ */
 @import "~bootstrap/scss/bootstrap-reboot";
 @import "~bootstrap/scss/bootstrap-grid";
+@import "vendor/animate";
 @import "vendor/slick";
+/**
+  Import generic
+ */
 @import "generic/variables";
 @import "generic/helpers";
 
+/**
+  Custom reset goes below
+ */
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -13,11 +26,6 @@ html {
 html, body, #app {
   height: 100%;
   overflow: hidden;
-}
-
-html,
-body {
-
 }
 
 body {

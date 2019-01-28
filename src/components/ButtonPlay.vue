@@ -1,5 +1,5 @@
 <template>
-  <button class="play-button">
+  <button class="button-play">
     <img
       class="d-block"
       src="/static/images/icon-play.svg"
@@ -10,6 +10,6 @@
 
 <script>
 export default {
-  name: 'PlayButton'
+  name: 'ButtonPlay'
 }
 </script>

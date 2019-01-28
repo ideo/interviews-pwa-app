@@ -1,13 +1,22 @@
+/**
+  Import skeleton & dependencies styles
+ */
 @import "_base";
 
-@import "components/screen-login";
-@import "components/screen-share";
-@import "components/screen-placeholder";
-@import "components/hamburger";
+/**
+  Import components
+ */
+@import "components/screens/screen-base";
+@import "components/screens/screen-login";
+@import "components/screens/screen-share";
+@import "components/screens/screen-placeholder";
+
+@import "components/buttons/button-hamburger";
+@import "components/buttons/button-share";
+@import "components/buttons/button-toggle";
+@import "components/buttons/button-play";
+
 @import "components/sidebar";
 @import "components/content";
-@import "components/share-button";
-@import "components/toggle-button";
 @import "components/card";
-@import "components/play-button";
 

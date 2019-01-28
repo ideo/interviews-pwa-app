@@ -5,3 +5,8 @@
 .text-center {
   text-align: center;
 }
+
+.screen-loading {
+  @extend .screen-share;
+  z-index: 100;
+}
