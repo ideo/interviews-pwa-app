@@ -16,6 +16,12 @@ import {mapGetters, mapState} from 'vuex'
 export default {
   name: 'ButtonHamburger',
 
+  data () {
+    return {
+      isClicked: false
+    }
+  },
+
   computed: {
     ...mapGetters(['isMobileMenuOpened']),
     ...mapState({
@@ -25,7 +31,13 @@ export default {
 
   methods: {
     toggleMobileMenu () {
-      this.$store.commit(TOGGLE_MOBILE_MENU, !this.isMobileMenuOpened)
+      if (!this.isClicked) {
+        this.isClicked = true
+        this.$store.commit(TOGGLE_MOBILE_MENU, !this.isMobileMenuOpened)
+        setTimeout(() => {
+          this.isClicked = false
+        }, 200)
+      }
     }
   }
 }

@@ -27,6 +27,7 @@
       :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
       class="h-100"
     >
+      <MobileMenu/>
       <ScreenShare v-if="isShare"/>
       <ButtonHamburger/>
       <ButtonShare/>
@@ -445,7 +446,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: true,
+      isStandalone: false,
       isMobile: false
     }
   },

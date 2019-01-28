@@ -42,6 +42,16 @@
   display: flex;
   flex-wrap: wrap;
   height: 100%;
+  transition: transform 200ms ease;
+
+  .is-mobile-menu-opened & {
+    //transform: translateY(182px);
+    transform: translateY(166px);
+
+    @media(min-width: 375px) {
+      transform: translateY(224px);
+    }
+  }
 }
 
 .content__slider {
