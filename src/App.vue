@@ -449,7 +449,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: true,
+      isStandalone: false,
       isMobile: false
     }
   },
