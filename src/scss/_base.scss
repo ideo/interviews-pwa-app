@@ -1,13 +1,23 @@
 @import "generic/fonts";
 @import "~bootstrap/scss/bootstrap-reboot";
 @import "~bootstrap/scss/bootstrap-grid";
+@import "vendor/slick";
 @import "generic/variables";
 @import "generic/helpers";
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
 
 html, body, #app {
   height: 100%;
   overflow: hidden;
-  -webkit-overflow-scrolling: touch;
+}
+
+html,
+body {
+
 }
 
 body {
@@ -35,20 +45,4 @@ button {
   &:focus {
     outline: none;
   }
-}
-
-.content {
-  padding: 16px 0;
-  width: calc(100vw - 72px);
-
-  @media(min-width: $md) {
-    width: calc(100vw - 112px);
-  }
-}
-
-.content__wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  width: 2000px;
-  height: 100%;
 }

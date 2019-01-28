@@ -1,0 +1,54 @@
+$toggle-button-switcher-bg: #5D635F;
+
+.toggle-button {
+  height: 64px;
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  z-index: 20;
+  transition: transform 200ms ease;
+}
+
+.toggle-button__switcher {
+  width: 32px;
+  height: 64px;
+  background-color: $toggle-button-switcher-bg;
+  border-radius: 16px;
+  display: block;
+  position: fixed;
+  top: 8px;
+  left: 20px;
+
+  @media(min-width: $lg) {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.toggle-button__switcher-label {
+  background-color: $white;
+  border-radius: 100%;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  transition: top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  .is-topics & {
+    top: 35px;
+  }
+}
+
+.toggle-button__switcher-icon {
+  max-width: 100%;
+  display: block;
+}

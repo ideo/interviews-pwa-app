@@ -1,20 +1,20 @@
 .card {
-  width: calc(100vw - 32px);
+  width: calc(100vw - 32px) !important;
   height: 100%;
-  border-radius: 8px;
-  margin-right: 16px;
+  scrollbar-width: none;
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 
-  .is-users & {
-    background-color: $white;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background-color: transparent;
+    -webkit-appearance: none;
   }
 
-  .is-topics & {
-    color: $white;
-    background-color: $black;
-  }
-
-  @media(min-width: $md) {
-    width: calc(100vw - 112px - 112px);
+  @media(min-width: $lg) {
+    width: unset !important;
   }
 }
 
@@ -22,7 +22,7 @@
   height: 192px;
   position: relative;
 
-  @media(min-width: $md) {
+  @media(min-width: $lg) {
     height: 360px;
   }
 }
@@ -33,6 +33,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
+  object-position: 50% 0%;
 }
 
 .card__featured-meta {
@@ -46,7 +47,7 @@
   align-items: center;
   color: $white;
 
-  @media(min-width: $md) {
+  @media(min-width: $lg) {
     padding-left: 40px;
   }
 }
@@ -59,27 +60,36 @@
 }
 
 .card__content {
-  padding: 16px 16px 32px;
+  padding: 30px 16px 0;
 
-  @media(min-width: $md) {
-    padding: 28px 32px 42px;
+  .is-users & {
+    background-color: $white;
+  }
+
+  .is-topics & {
+    color: $white;
+    background-color: $black;
+  }
+
+  @media(min-width: $lg) {
+    padding: 24px 32px 0;
   }
 }
 
 .card__content-meta {
   margin-bottom: 32px;
 
-  @media(min-width: $md) {
+  @media(min-width: $lg) {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 40px;
+    margin-bottom: 42px;
   }
 }
 
 .card__content-meta-info {
   padding-bottom: 32px;
 
-  @media(min-width: $md) {
+  @media(min-width: $lg) {
     max-width: 45%;
     flex: 0 0 45%;
     padding-bottom: 0;
@@ -96,10 +106,14 @@
     color: $white;
   }
 
-  @media(min-width: $md) {
+  @media(min-width: $lg) {
     max-width: 55%;
     flex: 0 0 55%;
     padding-top: 2px;
+  }
+
+  @media(min-width: $xl) {
+    padding-top: 6px;
   }
 }
 
@@ -108,4 +122,39 @@
   letter-spacing: -1px;
   line-height: 1;
   font-size: 64px;
+}
+
+.card__content-video {
+  margin-bottom: 32px;
+
+  @media(min-width: $lg) {
+    margin-bottom: 42px;
+  }
+}
+
+.card__content-video-poster {
+  margin: 0 0 9px;
+  position: relative;
+
+  & > img {
+    width: 100%;
+    display: block;
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
+
+.card__content-video-title {
+  font-family: $font-bold;
+  margin-bottom: 2px;
+}
+
+.card__content-video-duration {
+  color: $gray;
 }

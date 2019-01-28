@@ -1,12 +1,19 @@
 <template>
-  <div class="sidebar h-100 d-flex flex-wrap flex-column justify-content-center align-items-center">
-    <div class="sidebar__logo">
-      <img
-        src="/static/images/logo.png"
-        class="sidebar__logo-image"
-        alt=""
-      >
-    </div>
+  <div class="toggle-button d-none d-lg-block">
+    <button
+      :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
+      class="toggle-button__switcher"
+      @click.prevent="toggleContent"
+    >
+      <div class="toggle-button__switcher-label">
+        <img
+          v-if="switcherLabelIconUrl !== ''"
+          :src="switcherLabelIconUrl"
+          alt=""
+          class="toggle-button__switcher-icon"
+        >
+      </div>
+    </button>
   </div>
 </template>
 
@@ -15,7 +22,7 @@ import {SET_CURRENT_MODULE} from '../store/actions/content'
 import {mapGetters, mapState} from 'vuex'
 
 export default {
-  name: 'Sidebar',
+  name: 'ToggleButton',
 
   data () {
     return {
