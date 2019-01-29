@@ -1,139 +1,5 @@
-<template>
-  <div
-    id="app"
-    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
-  >
-    <transition
-      v-if="isLoading"
-      :duration="1000"
-      name="screen-animation"
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-      mode="out-in"
-    >
-      <div
-        v-if="isLoading && isAuth"
-        class="screen-loading"
-      />
-    </transition>
-    <div
-      v-else-if="(!isAuth && isStandalone) || (!isAuth && !isStandalone && !isMobile)"
-      class="screen-login"
-    >
-      <ScreenLogin/>
-    </div>
-    <div v-else-if="!isStandalone && isMobile">
-      <ScreenPlaceholder/>
-    </div>
-    <div
-      v-else-if="(isAuth && isStandalone) || (isAuth && !isMobile)"
-      :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
-      class="h-100"
-    >
-      <MobileMenu/>
-      <ScreenShare v-if="isShare"/>
-      <ButtonHamburger/>
-      <ButtonShare/>
-      <ButtonToggle/>
-      <Sidebar/>
-      <div
-        :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
-        class="content">
-        <div
-          v-if="isUsersLoaded && isUsers"
-          class="content__wrapper"
-        >
-          <slick
-            ref="slick"
-            :options="slickOptions"
-            class="content__slider"
-            @beforeChange="handleBeforeChange"
-          >
-            <div
-              v-for="user in users"
-              :key="user.title + user.city"
-              class="card"
-              @scroll="cardScroll"
-            >
-              <div
-                v-if="user.featured.length > 0"
-                class="card__hero"
-              >
-                <div class="card__featured">
-                  <img
-                    :src="awsUrl + user.featured[0].thumbnail[0].filename"
-                    class="card__featured-image"
-                    alt=""
-                  >
-                  <div class="card__featured-meta">
-                    <ButtonPlay/>
-                  </div>
-                </div>
-              </div>
-              <div class="card__content">
-                <div class="card__content-meta">
-                  <div class="card__content-meta-info">
-                    <div class="card__content-meta-title">{{ user.title }}</div>
-                    {{ user.age }}, {{ user.city }}
-                  </div>
-                  <div class="card__content-meta-description">{{ user.description }}</div>
-                </div>
-                <div class="row text-center">
-                  Empty
-                </div>
-              </div>
-            </div>
-          </slick>
-        </div>
-        <div
-          v-else-if="isTopicsLoaded && !isUsers"
-          class="content__wrapper"
-        >
-          <slick
-            ref="slick"
-            :options="slickOptions"
-            class="content__slider"
-            @beforeChange="handleBeforeChange"
-          >
-            <div
-              v-for="topic in topics"
-              :key="topic.title"
-              class="card"
-              @scroll="cardScroll"
-            >
-              <div class="card__hero">
-                <div class="card__featured">
-                  <img
-                    :src="awsUrl + topic.thumbnail[0].filename"
-                    class="card__featured-image"
-                    alt=""
-                  >
-                </div>
-              </div>
-              <div class="card__content">
-                <div class="card__content-meta">
-                  <div class="card__content-meta-info">
-                    <div
-                      class="card__content-meta-title"
-                      v-html="topic.title"
-                    />
-                    {{ topic.videos[0].length }} Mentions
-                  </div>
-                  <div class="card__content-meta-description">{{ topic.description }}</div>
-                </div>
-                <div class="row text-center">
-                  Empty
-                </div>
-              </div>
-            </div>
-          </slick>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
+/* eslint-disable vue/attribute-hyphenation */
 import {GET_USERS, GET_TOPICS} from './store/actions/content'
 import {TOGGLE_SLICK_STATUS} from './store/actions/status'
 import {mapGetters, mapState} from 'vuex'
@@ -180,7 +46,16 @@ export default {
       isMobile: false,
       isUsersLoaded: false,
       isTopicsLoaded: false,
-      awsUrl: process.env.AWS_URL
+      awsUrl: process.env.AWS_URL,
+      playerOptions: {
+        muted: false,
+        language: 'en',
+        resizeManager: false,
+        sources: [{
+          type: 'video/mp4',
+          src: ''
+        }]
+      }
     }
   },
 
@@ -195,7 +70,10 @@ export default {
       users: state => state.content.users,
       topics: state => state.content.topics,
       slickInited: state => state.status.slickInited
-    })
+    }),
+    player () {
+      return this.$refs.videoPlayer.player
+    }
   },
 
   mounted () {
@@ -364,7 +242,180 @@ export default {
     onOrientationChange () {
       // Re-init slick carousel
       this.reInit()
+    },
+
+    /**
+     * Open Video
+     */
+    openVideo (videoSrc) {
+      this.playerOptions.sources[0].src = videoSrc
+      this.player.requestFullscreen()
+      this.player.play()
+    },
+
+    /**
+     * Video Player is Ready
+     * @param player
+     */
+    playerReadied (player) {
+      player.tech_.off('dblclick')
     }
   }
 }
 </script>
+
+<template>
+  <div
+    id="app"
+    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
+  >
+    <transition
+      v-if="isLoading"
+      :duration="1000"
+      name="screen-animation"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+      mode="out-in"
+    >
+      <div
+        v-if="isLoading && isAuth"
+        class="screen-loading"
+      />
+    </transition>
+    <div
+      v-else-if="(!isAuth && isStandalone) || (!isAuth && !isStandalone && !isMobile)"
+      class="screen-login"
+    >
+      <ScreenLogin/>
+    </div>
+    <div v-else-if="!isStandalone && isMobile">
+      <ScreenPlaceholder/>
+    </div>
+    <div
+      v-else-if="(isAuth && isStandalone) || (isAuth && !isMobile)"
+      :class="{ 'is-sidebar-hidden': sidebarHidden, 'is-hamburger-hidden': hamburgerHidden, 'is-mobile-menu-opened': isMobileMenuOpened }"
+      class="h-100"
+    >
+      <MobileMenu/>
+      <ScreenShare v-if="isShare"/>
+      <ButtonHamburger/>
+      <ButtonShare/>
+      <ButtonToggle/>
+      <Sidebar/>
+      <div
+        :class="{ 'is-users': isUsers, 'is-topics': !isUsers }"
+        class="content">
+        <div
+          v-if="isUsersLoaded && isUsers"
+          class="content__wrapper"
+        >
+          <slick
+            ref="slick"
+            :options="slickOptions"
+            class="content__slider"
+            @beforeChange="handleBeforeChange"
+          >
+            <div
+              v-for="user in users"
+              :key="user.title + user.city"
+              class="card"
+              @scroll="cardScroll"
+            >
+              <div
+                v-if="user.featured.length > 0"
+                class="card__hero"
+              >
+                <div class="card__featured">
+                  <img
+                    :src="awsUrl + user.featured[0].thumbnail[0].filename"
+                    class="card__featured-image"
+                    alt=""
+                  >
+                  <div class="card__featured-meta">
+                    <button
+                      class="button-play"
+                      @click.prevent="openVideo(awsUrl + user.featured[0].video[0].filename)"
+                    >
+                      <img
+                        class="d-block"
+                        src="/static/images/icon-play.svg"
+                        alt=""
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="card__content-meta">
+                  <div class="card__content-meta-info">
+                    <div class="card__content-meta-title">{{ user.title }}</div>
+                    {{ user.age }}, {{ user.city }}
+                  </div>
+                  <div class="card__content-meta-description">{{ user.description }}</div>
+                </div>
+                <div class="row text-center">
+                  Empty
+                </div>
+              </div>
+            </div>
+          </slick>
+        </div>
+        <div
+          v-else-if="isTopicsLoaded && !isUsers"
+          class="content__wrapper"
+        >
+          <slick
+            ref="slick"
+            :options="slickOptions"
+            class="content__slider"
+            @beforeChange="handleBeforeChange"
+          >
+            <div
+              v-for="topic in topics"
+              :key="topic.title"
+              class="card"
+              @scroll="cardScroll"
+            >
+              <div class="card__hero">
+                <div class="card__featured">
+                  <img
+                    :src="awsUrl + topic.thumbnail[0].filename"
+                    class="card__featured-image"
+                    alt=""
+                  >
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="card__content-meta">
+                  <div class="card__content-meta-info">
+                    <div
+                      class="card__content-meta-title"
+                      v-html="topic.title"
+                    />
+                    {{ topic.videos[0].length }} Mentions
+                  </div>
+                  <div class="card__content-meta-description">{{ topic.description }}</div>
+                </div>
+                <div class="row text-center">
+                  Empty
+                </div>
+              </div>
+            </div>
+          </slick>
+        </div>
+      </div>
+    </div>
+    <div
+      class="video-player"
+    >
+      <video-player
+        ref="videoPlayer"
+        :playsinline="false"
+        :options="playerOptions"
+        class="video-player-box"
+        customEventName="customstatechangedeventname"
+        @ready="playerReadied"
+      />
+    </div>
+  </div>
+</template>

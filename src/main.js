@@ -3,8 +3,10 @@ import App from './App'
 import './scss/app.scss'
 import {store} from './store/store'
 import axios from 'axios'
+// Video player
+import VueVideoPlayer from 'vue-video-player'
+import 'vue-video-player/src/custom-theme.css'
 // Buttons
-import ButtonPlay from './components/ButtonPlay'
 import ButtonHamburger from './components/ButtonHamburger'
 import ButtonToggle from './components/ButtonToggle'
 import ButtonShare from './components/ButtonShare'
@@ -17,8 +19,12 @@ import Sidebar from './components/Sidebar'
 // Mobile Menu
 import MobileMenu from './components/MobileMenu'
 
+// Video player
+Vue.use(VueVideoPlayer /* {
+  options: global default options,
+  events: global videojs events
+} */)
 // Buttons
-Vue.component('ButtonPlay', ButtonPlay)
 Vue.component('ButtonHamburger', ButtonHamburger)
 Vue.component('ButtonToggle', ButtonToggle)
 Vue.component('ButtonShare', ButtonShare)
