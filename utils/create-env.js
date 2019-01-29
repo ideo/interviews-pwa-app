@@ -7,6 +7,7 @@ const fs = require('fs');
 const contents =
 `AXIOS_BASE_URL=${process.env.AXIOS_BASE_URL}
 AWS_URL=${process.env.AWS_URL}
-PASSWORD=${process.env.PASSWORD}`;
+PASSWORD=${process.env.PASSWORD}
+`;
 
 fs.writeFileSync('./.env', contents)
