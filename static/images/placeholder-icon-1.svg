@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Group Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-8-Copy-9" transform="translate(-77.000000, -430.000000)">
+            <g id="Group" transform="translate(17.000000, 43.000000)">
+                <g id="Group-Copy" transform="translate(60.000000, 387.000000)">
+                    <circle id="Oval" fill="#FFFFFF" fill-rule="nonzero" cx="28" cy="28" r="28"></circle>
+                    <g id="Glyphs-/-Bar-Button-/-Action-/-Light" transform="translate(14.000000, 12.000000)" fill="#007AFF">
+                        <path d="M13.969,0.4995 L9.5,4.9685 L10.214,5.6775 L13.5,2.3855 L13.5,17.4995 L14.5,17.4995 L14.5,2.4405 L17.787,5.6775 L18.5,4.9685 L13.969,0.4995 Z M16.501,7.9995 L16.501,8.9995 L22.5,8.9995 L22.5,25.9995 L5.5,25.9995 L5.5,8.9995 L11.5,8.9995 L11.5,7.9995 L4.5,7.9995 L4.5,27.0005 L23.5,27.0005 L23.5,7.9995 L16.501,7.9995 Z" id="action"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

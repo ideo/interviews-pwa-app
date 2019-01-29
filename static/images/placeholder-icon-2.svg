@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M27.7272727,22.9545455 L22.9545455,22.9545455 L22.9545455,27.7272727 C22.9545455,28.4298182 22.7025455,29 22,29 C21.2974545,29 21.0454545,28.4298182 21.0454545,27.7272727 L21.0454545,22.9545455 L16.2727273,22.9545455 C15.5695455,22.9545455 15,22.7031818 15,22 C15,21.2974545 15.5695455,21.0454545 16.2727273,21.0454545 L21.0454545,21.0454545 L21.0454545,16.2727273 C21.0454545,15.5701818 21.2974545,15 22,15 C22.7025455,15 22.9545455,15.5701818 22.9545455,16.2727273 L22.9545455,21.0454545 L27.7272727,21.0454545 C28.4298182,21.0454545 29,21.2974545 29,22 C29,22.7031818 28.4298182,22.9545455 27.7272727,22.9545455" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-8-Copy-9" transform="translate(-297.000000, -436.000000)">
+            <g id="Group" transform="translate(17.000000, 43.000000)">
+                <g id="Group-2-Copy" transform="translate(280.000000, 393.000000)">
+                    <rect id="Rectangle-Copy" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="44" height="44" rx="12"></rect>
+                    <rect id="Rectangle" fill="#585858" fill-rule="nonzero" x="8" y="8" width="28" height="28" rx="7"></rect>
+                    <g id="add">
+                        <use fill-opacity="0.3" fill="#000000" xlink:href="#path-1"></use>
+                        <use fill="#FFFFFF" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

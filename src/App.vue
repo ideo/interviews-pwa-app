@@ -57,7 +57,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isMobileOnPC: false,
       isUsersLoaded: false,
@@ -100,7 +100,7 @@ export default {
 
   mounted () {
     /** Handle swipe for mobile version **/
-    if (this.isMobile && this.windowWidth < 992) {
+    if (this.isAuth && this.isMobile && this.windowWidth < 992) {
       this.xDown = null
 
       this.getTouches = (event) => event.touches || event.originalEvent.touches
@@ -205,6 +205,8 @@ export default {
         // Disable bounce effect on scroll for iOS devices
         if (getMobileOperatingSystem() === 'iOS') {
           iNoBounce.enable()
+        } else {
+          iNoBounce.disable()
         }
       }
     },
@@ -282,8 +284,10 @@ export default {
       const videoID = videoSrc
       if (this.isMobile && !this.isIpad) {
         this.$refs[videoID][0].currentTime = 0
-        this.$refs[videoID][0].play()
         this.launchIntoFullscreen(this.$refs[videoID])
+        setTimeout(() => {
+          this.$refs[videoID][0].play()
+        }, 200)
       } else {
         this.playerOptions.sources[0].src = videoSrc
         setTimeout(() => {
@@ -316,7 +320,9 @@ export default {
     /** Event on orientation change **/
     onOrientationChange () {
       // Re-init slick carousel
-      this.$refs.slick.setPosition()
+      if (this.$refs.slick) {
+        this.$refs.slick.setPosition()
+      }
     },
 
     /**
@@ -360,7 +366,10 @@ export default {
     >
       <ScreenLogin/>
     </div>
-    <div v-else-if="!isStandalone && isMobile">
+    <div
+      v-else-if="!isStandalone && isMobile"
+      class="h-100"
+    >
       <ScreenPlaceholder/>
     </div>
     <div
@@ -458,19 +467,19 @@ export default {
                     :key="video.id"
                     class="col-md-6 col-lg-4"
                   >
-                    <div
-                      v-if="video.video[0]"
-                      class="card__content-video"
-                    >
-                      <div class="card__content-video-poster">
+                    <div class="card__content-video">
+                      <div
+                        v-if="video.video[0]"
+                        class="card__content-video-poster"
+                      >
                         <img
-                          :src="awsUrl + video.thumbnail[0].filename"
+                          :src="awsUrl + video.thumbnail[0].universal"
                           alt=""
                         >
                         <video
                           v-if="isMobile && !isIpad"
                           :ref="video.id"
-                          :poster="awsUrl + video.thumbnail[0].filename"
+                          :poster="awsUrl + video.thumbnail[0].universal"
                           class="d-none"
                           allowfullscreen
                         >
@@ -561,19 +570,19 @@ export default {
                     :key="video.id"
                     class="col-md-6 col-lg-4"
                   >
-                    <div
-                      v-if="video.video[0]"
-                      class="card__content-video"
-                    >
-                      <div class="card__content-video-poster">
+                    <div class="card__content-video">
+                      <div
+                        v-if="video.video[0]"
+                        class="card__content-video-poster"
+                      >
                         <img
-                          :src="awsUrl + video.thumbnail[0].filename"
+                          :src="awsUrl + video.thumbnail[0].universal"
                           alt=""
                         >
                         <video
                           v-if="isMobile && !isIpad"
                           :ref="video.id"
-                          :poster="awsUrl + video.thumbnail[0].filename"
+                          :poster="awsUrl + video.thumbnail[0].universal"
                           class="d-none"
                           allowfullscreen
                         >

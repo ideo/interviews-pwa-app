@@ -111,14 +111,14 @@ body {
     }
     @media screen and (min-device-width: 768px) and (orientation: portrait) {
       display: none !important;
+
+      &.is-placeholder-screen {
+        display: block !important;
+      }
     }
 
     &.is-mobile-on-pc {
       display: block !important;
-
-      .is-placeholder-screen {
-        display: none !important;
-      }
     }
   }
 

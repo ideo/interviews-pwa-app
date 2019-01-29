@@ -1833,8 +1833,28 @@ video::-webkit-media-text-track-display {
   }
 }
 
-.is-ios {
-  .vjs-control-bar {
-    //display: none !important;
+.video-js button.vjs-big-play-button {
+  @extend .button-play;
+  border: none;
+  background-image: url('/static/images/icon-play.svg');
+  background-position: center left 27px;
+  background-repeat: no-repeat;
+  background-size: 15px;
+
+  .vjs-control-text,
+  .vjs-icon-placeholder {
+    display: none;
   }
+}
+
+.video-js:hover .vjs-big-play-button {
+  background-color: $green !important;
+}
+
+.vjs-controls-disabled .vjs-big-play-button, .vjs-has-started .vjs-big-play-button, .vjs-using-native-controls .vjs-big-play-button, .vjs-error .vjs-big-play-button {
+  display: none !important;
+}
+
+.vjs-paused.vjs-has-started.vjs-custom-skin > .video-js .vjs-big-play-button, .video-js.vjs-ended .vjs-big-play-button, .video-js.vjs-paused .vjs-big-play-button {
+  display: block !important;
 }
