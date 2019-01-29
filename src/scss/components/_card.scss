@@ -119,9 +119,14 @@
   padding-bottom: 32px;
 
   @media(min-width: $lg) {
-    max-width: 45%;
-    flex: 0 0 45%;
+    max-width: 50%;
+    flex: 0 0 50%;
     padding-bottom: 0;
+  }
+
+  @media(min-width: $xl) {
+    max-width: 55%;
+    flex: 0 0 55%;
   }
 }
 
@@ -136,13 +141,15 @@
   }
 
   @media(min-width: $lg) {
-    max-width: 55%;
-    flex: 0 0 55%;
+    max-width: 50%;
+    flex: 0 0 50%;
     padding-top: 2px;
   }
 
   @media(min-width: $xl) {
     padding-top: 6px;
+    max-width: 55%;
+    flex: 0 0 55%;
   }
 }
 
@@ -150,8 +157,28 @@
   font-family: $font-bold;
   letter-spacing: -1px;
   line-height: 1;
-  font-size: 64px;
+  font-size: 48px;
   margin-bottom: 6px;
+
+  @media(min-width: 375px) {
+    font-size: 64px;
+  }
+}
+
+.is-topics .card__content-meta-title {
+  font-size: 36px;
+
+  @media(min-width: 375px) {
+    font-size: 42px;
+  }
+
+  @media(min-width: 414px) {
+    font-size: 48px;
+  }
+
+  @media(min-width: $xl) {
+    font-size: 64px;
+  }
 }
 
 .card__content-video {

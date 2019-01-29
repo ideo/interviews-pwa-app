@@ -57,7 +57,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isMobileOnPC: false,
       isIos: false,
