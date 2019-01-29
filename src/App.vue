@@ -100,7 +100,7 @@ export default {
 
   mounted () {
     /** Handle swipe for mobile version **/
-    if (this.isAuth && this.isMobile && this.windowWidth < 992) {
+    if (this.isMobile && this.windowWidth < 992) {
       this.xDown = null
 
       this.getTouches = (event) => event.touches || event.originalEvent.touches
