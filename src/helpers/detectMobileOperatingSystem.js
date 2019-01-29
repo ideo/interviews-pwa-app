@@ -4,7 +4,7 @@
  *
  * @returns {String}
  */
-export default function getMobileOperatingSystem () {
+export function getMobileOperatingSystem () {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera
 
   // Windows Phone must come first because its UA also contains 'Android'
@@ -22,4 +22,14 @@ export default function getMobileOperatingSystem () {
   }
 
   return 'unknown'
+}
+
+export function isIpad () {
+  const userAgent = navigator.userAgent
+
+  if (/iPad/.test(userAgent) && !window.MSStream) {
+    return true
+  }
+
+  return false
 }

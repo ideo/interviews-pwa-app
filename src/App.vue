@@ -10,7 +10,7 @@ import videojs from 'video.js'
 // Slick library was modified to meet our requirements.
 import Slick from './helpers/slick'
 // getMobileOperatingSystem
-import getMobileOperatingSystem from './helpers/detectMobileOperatingSystem'
+import { getMobileOperatingSystem, isIpad } from './helpers/detectMobileOperatingSystem'
 
 /**
  * 1. Name
@@ -78,7 +78,8 @@ export default {
         }
       },
       isPlayed: false,
-      windowWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      windowWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+      isIpad: isIpad
     }
   },
 
@@ -262,16 +263,35 @@ export default {
       videojs.registerComponent('customFullscreenButton', CustomFullscreenButton)
     },
 
+    launchIntoFullscreen (element) {
+      if (element.requestFullScreen) {
+        element.requestFullScreen()
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen()
+      } else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen()
+      } else if (element.webkitEnterFullscreen) {
+        element.webkitEnterFullscreen()
+      }
+    },
+
     /**
      * Open video by button click
      * @param videoSrc = Video URL
      */
     openVideo (videoSrc) {
-      this.playerOptions.sources[0].src = videoSrc
-      setTimeout(() => {
-        this.player.play()
-        this.isPlayed = true
-      }, 100)
+      const videoID = videoSrc
+      if (this.isMobile) {
+        this.$refs[videoID][0].currentTime = 0
+        this.$refs[videoID][0].play()
+        this.launchIntoFullscreen(this.$refs[videoID])
+      } else {
+        this.playerOptions.sources[0].src = videoSrc
+        setTimeout(() => {
+          this.player.play()
+          this.isPlayed = true
+        }, 100)
+      }
     },
 
     /**
@@ -375,17 +395,43 @@ export default {
               @scroll="cardScroll"
             >
               <div
-                v-if="user.featured.length > 0"
+                v-if="user.featured.length > 0 && user.featured[0].video[0]"
                 class="card__hero"
               >
                 <div class="card__featured">
                   <img
-                    :src="awsUrl + user.featured[0].thumbnail[0].filename"
+                    v-if="!isMobile"
+                    :src="awsUrl + user.featured[0].thumbnail[0].tablet"
                     class="card__featured-image"
                     alt=""
                   >
+                  <video
+                    v-if="isMobile && !isIpad"
+                    :ref="user.featured[0].id"
+                    :poster="awsUrl + user.featured[0].thumbnail[0].mobile"
+                    :class="{ 'd-none': !isMobile }"
+                    class="card__featured-image"
+                    allowfullscreen
+                  >
+                    <source
+                      :src="awsUrl + user.featured[0].video[0].filename"
+                      type="video/mp4"
+                    >
+                  </video>
                   <div class="card__featured-meta">
                     <button
+                      v-if="isMobile && !isIpad"
+                      class="button-play"
+                      @click.prevent="openVideo(user.featured[0].id)"
+                    >
+                      <img
+                        class="d-block"
+                        src="/static/images/icon-play.svg"
+                        alt=""
+                      >
+                    </button>
+                    <button
+                      v-else
                       class="button-play"
                       @click.prevent="openVideo(awsUrl + user.featured[0].video[0].filename)"
                     >
@@ -431,11 +477,17 @@ export default {
             >
               <div class="card__hero">
                 <div class="card__featured">
-                  <img
-                    :src="awsUrl + topic.thumbnail[0].filename"
-                    class="card__featured-image"
-                    alt=""
-                  >
+                  <picture>
+                    <source
+                      :srcset="awsUrl + topic.thumbnail[0].tablet"
+                      media="(min-width: 768px)"
+                    >
+                    <img
+                      :src="awsUrl + topic.thumbnail[0].mobile"
+                      class="card__featured-image"
+                      alt=""
+                    >
+                  </picture>
                 </div>
               </div>
               <div class="card__content">
