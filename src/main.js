@@ -18,6 +18,8 @@ import ScreenPlaceholder from './components/ScreenPlaceholder'
 import Sidebar from './components/Sidebar'
 // Mobile Menu
 import MobileMenu from './components/MobileMenu'
+// Lazyload
+import LazySizes from 'lazysizes'
 
 // Video Video Player
 // https://www.npmjs.com/package/vue-video-player
@@ -34,6 +36,8 @@ Vue.component('ScreenPlaceholder', ScreenPlaceholder)
 Vue.component('Sidebar', Sidebar)
 // Mobile menu
 Vue.component('MobileMenu', MobileMenu)
+// Lazyload
+Vue.use(LazySizes)
 
 Vue.config.productionTip = false
 

@@ -57,7 +57,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isMobileOnPC: false,
       isUsersLoaded: false,
@@ -78,7 +78,8 @@ export default {
       },
       isPlayed: false,
       windowWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-      isIpad: isIpad()
+      isIpad: isIpad(),
+      isIos: false
     }
   },
 
@@ -198,6 +199,9 @@ export default {
     /** Detect device OS and standalone mode **/
     detectDevice () {
       if (getMobileOperatingSystem() !== 'unknown') {
+        if (getMobileOperatingSystem() === 'iOS') {
+          this.isIos = true
+        }
         this.isMobile = true
         if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone)) {
           this.isStandalone = true
@@ -282,7 +286,7 @@ export default {
      */
     openVideo (videoSrc) {
       const videoID = videoSrc
-      if (this.isMobile && !this.isIpad) {
+      if (this.isIos && !this.isIpad) {
         this.$refs[videoID][0].currentTime = 0
         this.launchIntoFullscreen(this.$refs[videoID])
         setTimeout(() => {
@@ -408,11 +412,18 @@ export default {
                 class="card__hero"
               >
                 <div class="card__featured">
-                  <img
-                    :src="awsUrl + user.featured[0].thumbnail[0].tablet"
-                    class="card__featured-image"
-                    alt=""
-                  >
+                  <picture>
+                    <source
+                      :srcset="awsUrl + user.featured[0].thumbnail[0].tablet"
+                      media="(min-width: 768px)"
+                    >
+                    <img
+                      :src="awsUrl + user.featured[0].thumbnail[0].lazyLoad"
+                      :data-src="awsUrl + user.featured[0].thumbnail[0].mobile"
+                      class="card__featured-image lazyload"
+                      alt=""
+                    >
+                  </picture>
                   <video
                     v-if="isMobile && !isIpad"
                     :ref="user.featured[0].id"
@@ -474,7 +485,9 @@ export default {
                         class="card__content-video-poster"
                       >
                         <img
-                          :src="awsUrl + video.thumbnail[0].universal"
+                          :src="awsUrl + video.thumbnail[0].lazyLoad"
+                          :data-src="awsUrl + video.thumbnail[0].universal"
+                          class="lazyload"
                           alt=""
                         >
                         <video
@@ -544,8 +557,9 @@ export default {
                       media="(min-width: 768px)"
                     >
                     <img
-                      :src="awsUrl + topic.thumbnail[0].mobile"
-                      class="card__featured-image"
+                      :src="awsUrl + topic.thumbnail[0].lazyLoad"
+                      :data-src="awsUrl + topic.thumbnail[0].mobile"
+                      class="card__featured-image lazyload"
                       alt=""
                     >
                   </picture>
@@ -577,7 +591,9 @@ export default {
                         class="card__content-video-poster"
                       >
                         <img
-                          :src="awsUrl + video.thumbnail[0].universal"
+                          :src="awsUrl + video.thumbnail[0].lazyLoad"
+                          :data-src="awsUrl + video.thumbnail[0].universal"
+                          class="lazyload"
                           alt=""
                         >
                         <video
