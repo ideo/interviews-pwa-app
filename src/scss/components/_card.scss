@@ -14,7 +14,7 @@
   }
 
   @media(min-width: $lg) {
-    width: unset !important;
+    width: 100% !important;
   }
 }
 
@@ -24,6 +24,10 @@
 
   @media(min-width: $lg) {
     height: 360px;
+  }
+
+  @media(min-width: 1280px) {
+    height: 70vh
   }
 }
 
@@ -41,7 +45,7 @@
   left: 0;
   bottom: 0;
   padding-left: 8px;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -49,6 +53,7 @@
 
   @media(min-width: $lg) {
     padding-left: 40px;
+    padding-bottom: 16px;
   }
 }
 
@@ -122,6 +127,7 @@
   letter-spacing: -1px;
   line-height: 1;
   font-size: 64px;
+  margin-bottom: 6px;
 }
 
 .card__content-video {

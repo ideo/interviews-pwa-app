@@ -55,18 +55,18 @@
               class="card"
               @scroll="cardScroll"
             >
-              <div class="card__hero">
+              <div
+                v-if="user.featured.length > 0"
+                class="card__hero"
+              >
                 <div class="card__featured">
                   <img
+                    :src="awsUrl + user.featured[0].thumbnail[0].filename"
                     class="card__featured-image"
-                    src="/static/demo/users-demo-featured-1.jpg"
                     alt=""
                   >
                   <div class="card__featured-meta">
                     <ButtonPlay/>
-                    <div class="card__featured-meta-title">
-                      My day starts with a search <br>for a new meanings
-                    </div>
                   </div>
                 </div>
               </div>
@@ -79,19 +79,7 @@
                   <div class="card__content-meta-description">{{ user.description }}</div>
                 </div>
                 <div class="row text-center">
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card__content-video">
-                      <div class="card__content-video-poster">
-                        <img
-                          src="/static/demo/users-demo-video-poster-3.jpg"
-                          alt=""
-                        >
-                        <ButtonPlay/>
-                      </div>
-                      <div class="card__content-video-title">On Self-Discipline</div>
-                      <div class="card__content-video-duration">00:43</div>
-                    </div>
-                  </div>
+                  Empty
                 </div>
               </div>
             </div>
@@ -125,7 +113,10 @@
               <div class="card__content">
                 <div class="card__content-meta">
                   <div class="card__content-meta-info">
-                    <div class="card__content-meta-title">{{ topic.title }}</div>
+                    <div
+                      class="card__content-meta-title"
+                      v-html="topic.title"
+                    />
                     {{ topic.videos[0].length }} Mentions
                   </div>
                   <div class="card__content-meta-description">{{ topic.description }}</div>
@@ -185,7 +176,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isUsersLoaded: false,
       isTopicsLoaded: false,
