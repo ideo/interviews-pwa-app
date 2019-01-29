@@ -28,7 +28,7 @@
             >
           </div>
           <div class="screen-share__password">
-            You’l be asked to input a <br>password which is <span>Knowyouruser</span>
+            You’l be asked to input a <br>password which is <span>{{ password }}</span>
           </div>
         </div>
       </div>
@@ -41,6 +41,12 @@ import {CLOSE_SHARE_SCREEN} from '../store/actions/status'
 
 export default {
   name: 'ScreenShare',
+  
+  data () {
+    return {
+      password: process.env.PASSWORD
+    }
+  },
 
   methods: {
     closeShareScreen () {
