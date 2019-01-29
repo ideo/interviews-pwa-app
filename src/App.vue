@@ -290,10 +290,11 @@ export default {
         }, 200)
       } else {
         this.playerOptions.sources[0].src = videoSrc
+        this.isPlayed = true
         setTimeout(() => {
           this.player.play()
-          this.isPlayed = true
-        }, 100)
+          this.player.setAttribute('autoplay', 'autoplay')
+        }, 200)
       }
     },
 
