@@ -41,7 +41,7 @@ import {CLOSE_SHARE_SCREEN} from '../store/actions/status'
 
 export default {
   name: 'ScreenShare',
-  
+
   data () {
     return {
       password: process.env.PASSWORD

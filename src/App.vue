@@ -10,7 +10,7 @@ import videojs from 'video.js'
 // Slick library was modified to meet our requirements.
 import Slick from './helpers/slick'
 // getMobileOperatingSystem
-import { getMobileOperatingSystem, isIpad } from './helpers/detectMobileOperatingSystem'
+import {getMobileOperatingSystem, isIpad} from './helpers/detectMobileOperatingSystem'
 
 /**
  * 1. Name
@@ -79,7 +79,7 @@ export default {
       },
       isPlayed: false,
       windowWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-      isIpad: isIpad
+      isIpad: isIpad()
     }
   },
 
@@ -452,8 +452,63 @@ export default {
                   </div>
                   <div class="card__content-meta-description">{{ user.description }}</div>
                 </div>
-                <div class="row text-center">
-                  Empty
+                <div
+                  v-if="user.videos.length > 0"
+                  class="row text-center"
+                >
+                  <div
+                    v-for="video in user.videos[0]"
+                    :key="video.id"
+                    class="col-md-6 col-lg-4"
+                  >
+                    <div
+                      v-if="video.video[0]"
+                      class="card__content-video"
+                    >
+                      <div class="card__content-video-poster">
+                        <img
+                          v-if="!isMobile"
+                          :src="awsUrl + video.thumbnail[0].filename"
+                          alt=""
+                        >
+                        <video
+                          v-if="isMobile && !isIpad"
+                          :ref="video.id"
+                          :poster="awsUrl + video.thumbnail[0].filename"
+                          :class="{ 'd-none': !isMobile }"
+                          allowfullscreen
+                        >
+                          <source
+                            :src="awsUrl + video.video[0].filename"
+                            type="video/mp4"
+                          >
+                        </video>
+                        <button
+                          v-if="isMobile && !isIpad"
+                          class="button-play"
+                          @click.prevent="openVideo(video.id)"
+                        >
+                          <img
+                            class="d-block"
+                            src="/static/images/icon-play.svg"
+                            alt=""
+                          >
+                        </button>
+                        <button
+                          v-else
+                          class="button-play"
+                          @click.prevent="openVideo(awsUrl + video.video[0].filename)"
+                        >
+                          <img
+                            class="d-block"
+                            src="/static/images/icon-play.svg"
+                            alt=""
+                          >
+                        </button>
+                      </div>
+                      <div class="card__content-video-title">{{ video.title }}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -501,8 +556,63 @@ export default {
                   </div>
                   <div class="card__content-meta-description">{{ topic.description }}</div>
                 </div>
-                <div class="row text-center">
-                  Empty
+                <div
+                  v-if="topic.videos.length > 0"
+                  class="row text-center"
+                >
+                  <div
+                    v-for="video in topic.videos[0]"
+                    :key="video.id"
+                    class="col-md-6 col-lg-4"
+                  >
+                    <div
+                      v-if="video.video[0]"
+                      class="card__content-video"
+                    >
+                      <div class="card__content-video-poster">
+                        <img
+                          v-if="!isMobile"
+                          :src="awsUrl + video.thumbnail[0].filename"
+                          alt=""
+                        >
+                        <video
+                          v-if="isMobile && !isIpad"
+                          :ref="video.id"
+                          :poster="awsUrl + video.thumbnail[0].filename"
+                          :class="{ 'd-none': !isMobile }"
+                          allowfullscreen
+                        >
+                          <source
+                            :src="awsUrl + video.video[0].filename"
+                            type="video/mp4"
+                          >
+                        </video>
+                        <button
+                          v-if="isMobile && !isIpad"
+                          class="button-play"
+                          @click.prevent="openVideo(video.id)"
+                        >
+                          <img
+                            class="d-block"
+                            src="/static/images/icon-play.svg"
+                            alt=""
+                          >
+                        </button>
+                        <button
+                          v-else
+                          class="button-play"
+                          @click.prevent="openVideo(awsUrl + video.video[0].filename)"
+                        >
+                          <img
+                            class="d-block"
+                            src="/static/images/icon-play.svg"
+                            alt=""
+                          >
+                        </button>
+                      </div>
+                      <div class="card__content-video-title">{{ video.title }}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

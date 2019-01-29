@@ -193,9 +193,11 @@
   margin: 0 0 9px;
   position: relative;
 
-  & > img {
+  & > img,
+  & > video {
     width: 100%;
     display: block;
+    object-fit: cover;
   }
 
   .button-play {
