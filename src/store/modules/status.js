@@ -10,14 +10,7 @@ const state = {
   slickInited: false
 }
 
-const getters = {
-  isUsers: state => state.isUsers,
-  isAuth: state => state.isAuth,
-  isLoading: state => state.isLoading,
-  isShare: state => state.isShare,
-  isMobileMenuOpened: state => state.isMobileMenuOpened,
-  slickInited: state => state.slickInited
-}
+const getters = {}
 
 const actions = {}
 

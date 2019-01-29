@@ -38,6 +38,7 @@ body {
   color: $black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 320px;
 }
 
 img {
@@ -105,6 +106,14 @@ body {
     }
     @media screen and (min-device-width: 768px) and (orientation: portrait) {
       display: none !important;
+    }
+
+    &.is-mobile-on-pc {
+      display: block !important;
+
+      .is-placeholder-screen {
+        display: none !important;
+      }
     }
   }
 

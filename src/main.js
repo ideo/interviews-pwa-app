@@ -19,11 +19,9 @@ import Sidebar from './components/Sidebar'
 // Mobile Menu
 import MobileMenu from './components/MobileMenu'
 
-// Video player
-Vue.use(VueVideoPlayer /* {
-  options: global default options,
-  events: global videojs events
-} */)
+// Video Video Player
+// https://www.npmjs.com/package/vue-video-player
+Vue.use(VueVideoPlayer)
 // Buttons
 Vue.component('ButtonHamburger', ButtonHamburger)
 Vue.component('ButtonToggle', ButtonToggle)

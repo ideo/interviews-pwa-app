@@ -2,12 +2,27 @@
 /* eslint-disable vue/attribute-hyphenation */
 import {GET_USERS, GET_TOPICS} from './store/actions/content'
 import {TOGGLE_SLICK_STATUS} from './store/actions/status'
-import {mapGetters, mapState} from 'vuex'
-// Vendor
+import {mapState} from 'vuex'
+// Disable bounce effect on scroll (iOS devices only).
 import iNoBounce from 'inobounce'
-import getMobileOperatingSystem from './helpers/detectMobileOperatingSystem'
+// Import videojs to create our custom fullscreen button component.
+import videojs from 'video.js'
+// Slick library was modified to meet our requirements.
 import Slick from './helpers/slick'
+// getMobileOperatingSystem
+import getMobileOperatingSystem from './helpers/detectMobileOperatingSystem'
 
+/**
+ * 1. Name
+ * 2. Components
+ * 3. Data
+ * 4. Computed
+ * 5. Mounted
+ * 6. Before Destroy
+ * 7. Before Update
+ * 8. Updated
+ * 9. Methods
+ */
 export default {
   name: 'App',
 
@@ -44,6 +59,8 @@ export default {
       hamburgerHidden: false,
       isStandalone: false,
       isMobile: false,
+      isMobileOnPC: false,
+      isIos: false,
       isUsersLoaded: false,
       isTopicsLoaded: false,
       awsUrl: process.env.AWS_URL,
@@ -54,13 +71,18 @@ export default {
         sources: [{
           type: 'video/mp4',
           src: ''
-        }]
-      }
+        }],
+        controlBar: {
+          fullscreenToggle: false,
+          customFullscreenButton: true
+        }
+      },
+      isPlayed: false,
+      windowWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
     }
   },
 
   computed: {
-    ...mapGetters(['isUsers', 'isAuth', 'isLoading', 'isShare', 'isMobileMenuOpened']),
     ...mapState({
       isUsers: state => state.status.isUsers,
       isAuth: state => state.status.isAuth,
@@ -77,35 +99,15 @@ export default {
   },
 
   mounted () {
-    /**
-     * Check if mobile & standalone on render
-     */
-    if (getMobileOperatingSystem() !== 'unknown') {
-      this.isMobile = true
-      if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone)) {
-        this.isStandalone = true
-      }
-    }
-
-    /**
-     * Handle swipe for mobile version
-     */
-    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 992) {
-      if (getMobileOperatingSystem() === 'iOS') {
-        iNoBounce.enable()
-      }
-
+    /** Handle swipe for mobile version **/
+    if (this.isMobile && this.windowWidth < 992) {
       this.xDown = null
-      this.yDown = null
 
-      this.getTouches = (event) => {
-        return event.touches || event.originalEvent.touches
-      }
+      this.getTouches = (event) => event.touches || event.originalEvent.touches
 
       this.handleTouchStart = (event) => {
         const firstTouch = this.getTouches(event)[0]
         this.xDown = firstTouch.clientX
-        this.yDown = firstTouch.clientY
       }
 
       this.handleTouchEnd = (event) => {
@@ -116,17 +118,15 @@ export default {
       }
 
       this.handleTouchSwipe = (event) => {
-        if (!this.xDown || !this.yDown) {
+        if (!this.xDown) {
           return true
         }
 
         let xUp = event.touches[0].clientX
-        let yUp = event.touches[0].clientY
 
         let xDiff = this.xDown - xUp
-        let yDiff = this.yDown - yUp
 
-        if (Math.abs(xDiff) > Math.abs(yDiff) && !this.isMobileMenuOpened) {
+        if (!this.isMobileMenuOpened) {
           if (xDiff > 0) {
             if (!this.sidebarHidden) {
               this.sidebarHidden = true
@@ -139,31 +139,23 @@ export default {
         }
 
         this.xDown = null
-        this.yDown = null
       }
 
       document.addEventListener('touchstart', this.handleTouchStart, false)
       document.addEventListener('touchend', this.handleTouchEnd, false)
       document.addEventListener('touchmove', this.handleTouchSwipe, false)
+    } else if (!this.isMobile && this.windowWidth < 992) {
+      // Show placeholder on mobile version for PC users
+      this.isMobile = true
+      this.isMobileOnPC = true
     }
-
-    /**
-     * Add event listener for orientation change
-     */
-    window.addEventListener('orientationchange', this.onOrientationChange, false)
-  },
-
-  beforeDestroy () {
-    this.removeEventListeners()
-
-    // Do NOT place "orientationchange" listener in the removeEventListeners() method!
-    document.removeEventListener('orientationchange', this.onOrientationChange)
   },
 
   created: function () {
-    /**
-     * Fetch users
-     */
+    /** Detect device OS and standalone mode **/
+    this.detectDevice()
+
+    /** Fetch users and then fetch topics */
     this.$store.dispatch(GET_USERS)
       .then(response => {
         this.isUsersLoaded = true
@@ -172,6 +164,21 @@ export default {
             this.isTopicsLoaded = true
           })
       })
+
+    /** Create custom fullscreen button for video.js player **/
+    this.createCustomFullscreenButton()
+
+    /** Call event listener to listen for ESC button click **/
+    document.addEventListener('keyup', this.closeVideoOnEscape)
+
+    /** Call event listener to listen for orientation change **/
+    window.addEventListener('orientationchange', this.onOrientationChange, false)
+  },
+
+  beforeDestroy () {
+    this.removeTouchEventListeners()
+    document.removeEventListener('orientationchange', this.onOrientationChange)
+    document.removeEventListener('keyup', this.closeVideoOnEscape)
   },
 
   beforeUpdate () {
@@ -188,27 +195,39 @@ export default {
   },
 
   methods: {
-    /**
-     * Slick carousel methods goes below
-     */
+    /** Detect device OS and standalone mode **/
+    detectDevice () {
+      if (getMobileOperatingSystem() !== 'unknown') {
+        this.isMobile = true
+        if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone)) {
+          this.isStandalone = true
+        }
+        // Disable bounce effect on scroll for iOS devices
+        if (getMobileOperatingSystem() === 'iOS') {
+          iNoBounce.enable()
+        }
+      }
+    },
+
+    /** Slick go to next slide **/
     next () {
       this.$refs.slick.next()
     },
 
+    /** Slick go to prev slide **/
     prev () {
       this.$refs.slick.prev()
     },
 
+    /** Slick re-init **/
     reInit () {
       this.$nextTick(() => {
         this.$refs.slick.reSlick()
       })
     },
 
-    /**
-     * Scroll top of the card when slide change (mobile only)
-     */
-    handleBeforeChange (event, slick, currentSlide, nextSlide) {
+    /** Scroll top of the card when slide change (mobile only) **/
+    handleBeforeChange (event, slick, currentSlide) {
       if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 992) {
         setTimeout(() => {
           document.getElementsByClassName('card')[currentSlide].scroll({top: 0, left: 0, behavior: 'smooth'})
@@ -216,10 +235,69 @@ export default {
       }
     },
 
-    removeEventListeners () {
+    /** Remove touch event listeners **/
+    removeTouchEventListeners () {
       document.removeEventListener('touchstart', this.handleTouchStart)
       document.removeEventListener('touchend', this.handleTouchEnd)
       document.removeEventListener('touchmove', this.handleTouchSwipe)
+    },
+
+    /** Create custom fullscreen button for video.js player **/
+    createCustomFullscreenButton () {
+      let that = this
+      let Button = videojs.getComponent('Button')
+
+      let CustomFullscreenButton = videojs.extend(Button, {
+        constructor: function () {
+          Button.apply(this, arguments)
+          this.addClass('vjs-fullscreen-control')
+        },
+        handleClick: function () {
+          that.player.reset()
+          that.playerOptions.sources[0].src = ''
+          that.isPlayed = false
+        }
+      })
+
+      videojs.registerComponent('customFullscreenButton', CustomFullscreenButton)
+    },
+
+    /**
+     * Open video by button click
+     * @param videoSrc = Video URL
+     */
+    openVideo (videoSrc) {
+      this.playerOptions.sources[0].src = videoSrc
+      setTimeout(() => {
+        this.player.play()
+        this.isPlayed = true
+      }, 100)
+    },
+
+    /**
+     * Close video by ESC button click
+     * @param event
+     */
+    closeVideoOnEscape (event) {
+      if (event.keyCode === 27) {
+        this.player.reset()
+        this.playerOptions.sources[0].src = ''
+        this.isPlayed = false
+      }
+    },
+
+    /**
+     * Event on Vides.js player is ready
+     * @param player
+     */
+    playerReadied (player) {
+      player.tech_.off('dblclick')
+    },
+
+    /** Event on orientation change **/
+    onOrientationChange () {
+      // Re-init slick carousel
+      this.reInit()
     },
 
     /**
@@ -234,31 +312,6 @@ export default {
           this.hamburgerHidden = false
         }
       }
-    },
-
-    /**
-     * Orientation Change Listener
-     */
-    onOrientationChange () {
-      // Re-init slick carousel
-      this.reInit()
-    },
-
-    /**
-     * Open Video
-     */
-    openVideo (videoSrc) {
-      this.playerOptions.sources[0].src = videoSrc
-      this.player.requestFullscreen()
-      this.player.play()
-    },
-
-    /**
-     * Video Player is Ready
-     * @param player
-     */
-    playerReadied (player) {
-      player.tech_.off('dblclick')
     }
   }
 }
@@ -267,7 +320,7 @@ export default {
 <template>
   <div
     id="app"
-    :class="{ 'is-placeholder-screen': isMobile && !isStandalone }"
+    :class="{ 'is-placeholder-screen': isMobile && !isStandalone, 'is-mobile-on-pc': isMobileOnPC, 'is-ios': isIos }"
   >
     <transition
       v-if="isLoading"
@@ -406,14 +459,15 @@ export default {
       </div>
     </div>
     <div
-      class="video-player"
+      :class="{ 'is-played': isPlayed }"
+      class="video-container"
     >
       <video-player
+        v-if="playerOptions.sources[0].src"
         ref="videoPlayer"
-        :playsinline="false"
+        :playsinline="true"
         :options="playerOptions"
         class="video-player-box"
-        customEventName="customstatechangedeventname"
         @ready="playerReadied"
       />
     </div>
