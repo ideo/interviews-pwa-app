@@ -57,10 +57,9 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: true,
+      isStandalone: false,
       isMobile: false,
       isMobileOnPC: false,
-      isIos: false,
       isUsersLoaded: false,
       isTopicsLoaded: false,
       awsUrl: process.env.AWS_URL,
@@ -281,7 +280,7 @@ export default {
      */
     openVideo (videoSrc) {
       const videoID = videoSrc
-      if (this.isMobile) {
+      if (this.isMobile && !this.isIpad) {
         this.$refs[videoID][0].currentTime = 0
         this.$refs[videoID][0].play()
         this.launchIntoFullscreen(this.$refs[videoID])
@@ -317,7 +316,7 @@ export default {
     /** Event on orientation change **/
     onOrientationChange () {
       // Re-init slick carousel
-      this.reInit()
+      this.$refs.slick.setPosition()
     },
 
     /**
@@ -340,7 +339,7 @@ export default {
 <template>
   <div
     id="app"
-    :class="{ 'is-placeholder-screen': isMobile && !isStandalone, 'is-mobile-on-pc': isMobileOnPC, 'is-ios': isIos }"
+    :class="{ 'is-placeholder-screen': isMobile && !isStandalone, 'is-mobile-on-pc': isMobileOnPC }"
   >
     <transition
       v-if="isLoading"
@@ -400,7 +399,6 @@ export default {
               >
                 <div class="card__featured">
                   <img
-                    v-if="!isMobile"
                     :src="awsUrl + user.featured[0].thumbnail[0].tablet"
                     class="card__featured-image"
                     alt=""
@@ -409,8 +407,7 @@ export default {
                     v-if="isMobile && !isIpad"
                     :ref="user.featured[0].id"
                     :poster="awsUrl + user.featured[0].thumbnail[0].mobile"
-                    :class="{ 'd-none': !isMobile }"
-                    class="card__featured-image"
+                    class="d-none"
                     allowfullscreen
                   >
                     <source
@@ -467,7 +464,6 @@ export default {
                     >
                       <div class="card__content-video-poster">
                         <img
-                          v-if="!isMobile"
                           :src="awsUrl + video.thumbnail[0].filename"
                           alt=""
                         >
@@ -475,7 +471,7 @@ export default {
                           v-if="isMobile && !isIpad"
                           :ref="video.id"
                           :poster="awsUrl + video.thumbnail[0].filename"
-                          :class="{ 'd-none': !isMobile }"
+                          class="d-none"
                           allowfullscreen
                         >
                           <source
@@ -571,7 +567,6 @@ export default {
                     >
                       <div class="card__content-video-poster">
                         <img
-                          v-if="!isMobile"
                           :src="awsUrl + video.thumbnail[0].filename"
                           alt=""
                         >
@@ -579,7 +574,7 @@ export default {
                           v-if="isMobile && !isIpad"
                           :ref="video.id"
                           :poster="awsUrl + video.thumbnail[0].filename"
-                          :class="{ 'd-none': !isMobile }"
+                          class="d-none"
                           allowfullscreen
                         >
                           <source
