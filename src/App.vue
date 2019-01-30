@@ -57,7 +57,7 @@ export default {
       },
       sidebarHidden: false,
       hamburgerHidden: false,
-      isStandalone: false,
+      isStandalone: true,
       isMobile: false,
       isMobileOnPC: false,
       isUsersLoaded: false,
@@ -100,6 +100,18 @@ export default {
   },
 
   mounted () {
+    /** Fetch users and then fetch topics */
+    if (this.isAuth) {
+      this.$store.dispatch(GET_USERS)
+        .then(response => {
+          this.isUsersLoaded = true
+          this.$store.dispatch(GET_TOPICS)
+            .then(response => {
+              this.isTopicsLoaded = true
+            })
+        })
+    }
+
     /** Handle swipe for mobile version **/
     if (this.isMobile && this.windowWidth < 992) {
       this.xDown = null
@@ -162,16 +174,6 @@ export default {
   created: function () {
     /** Detect device OS and standalone mode **/
     this.detectDevice()
-
-    /** Fetch users and then fetch topics */
-    this.$store.dispatch(GET_USERS)
-      .then(response => {
-        this.isUsersLoaded = true
-        this.$store.dispatch(GET_TOPICS)
-          .then(response => {
-            this.isTopicsLoaded = true
-          })
-      })
 
     /** Create custom fullscreen button for video.js player **/
     this.createCustomFullscreenButton()
