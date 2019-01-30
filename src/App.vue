@@ -103,12 +103,16 @@ export default {
     /** Handle swipe for mobile version **/
     if (this.isMobile && this.windowWidth < 992) {
       this.xDown = null
+      this.yDown = null
 
-      this.getTouches = (event) => event.touches || event.originalEvent.touches
+      this.getTouches = (event) => {
+        return event.touches || event.originalEvent.touches
+      }
 
       this.handleTouchStart = (event) => {
         const firstTouch = this.getTouches(event)[0]
         this.xDown = firstTouch.clientX
+        this.yDown = firstTouch.clientY
       }
 
       this.handleTouchEnd = (event) => {
@@ -119,15 +123,17 @@ export default {
       }
 
       this.handleTouchSwipe = (event) => {
-        if (!this.xDown) {
+        if (!this.xDown || !this.yDown) {
           return true
         }
 
         let xUp = event.touches[0].clientX
+        let yUp = event.touches[0].clientY
 
         let xDiff = this.xDown - xUp
+        let yDiff = this.yDown - yUp
 
-        if (!this.isMobileMenuOpened) {
+        if (Math.abs(xDiff) > Math.abs(yDiff) && !this.isMobileMenuOpened) {
           if (xDiff > 0) {
             if (!this.sidebarHidden) {
               this.sidebarHidden = true
@@ -140,6 +146,7 @@ export default {
         }
 
         this.xDown = null
+        this.yDown = null
       }
 
       document.addEventListener('touchstart', this.handleTouchStart, false)
