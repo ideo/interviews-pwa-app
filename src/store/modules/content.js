@@ -11,16 +11,30 @@ const getters = {}
 
 const actions = {
   [GET_USERS]: ({commit, dispatch}) => {
-    axios.get('/people.json')
-      .then(response => {
-        commit(GET_USERS_SUCCESS, response)
-      })
+    return new Promise((resolve, reject) => {
+      axios.get('/people.json')
+        .then(response => {
+          commit(GET_USERS_SUCCESS, response)
+          resolve(response)
+        })
+        .catch(err => {
+          console.log(err)
+          reject(err)
+        })
+    })
   },
   [GET_TOPICS]: ({commit, dispatch}) => {
-    axios.get('/themes.json')
-      .then(response => {
-        commit(GET_TOPICS_SUCCESS, response)
-      })
+    return new Promise((resolve, reject) => {
+      axios.get('/themes.json')
+        .then(response => {
+          commit(GET_TOPICS_SUCCESS, response)
+          resolve(response)
+        })
+        .catch(err => {
+          console.log(err)
+          reject(err)
+        })
+    })
   }
 }
 
