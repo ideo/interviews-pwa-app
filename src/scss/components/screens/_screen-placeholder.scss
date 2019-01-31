@@ -20,10 +20,13 @@
 
 .screen-placeholder__content {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  & > div {
+    width: 100%;
+  }
 }
 
 .screen-placeholder__title {
@@ -34,10 +37,6 @@
 
   br {
     display: none;
-  }
-
-  @media(min-width: 375px) {
-    font-size: 52px;
   }
 
   @media(min-width: 414px) {
