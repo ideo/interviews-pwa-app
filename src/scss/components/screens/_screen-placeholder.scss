@@ -5,12 +5,16 @@
   background-size: cover;
   background-image: url('/static/images/placeholder-bg-mobile.jpg');
   text-align: left;
-  padding: 40px 18px 24px;
+  padding: 18px 18px 24px;
   letter-spacing: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   max-height: 100%;
   position: absolute;
+
+  @media(min-width: 414px) {
+    padding-top: 40px;
+  }
 
   @media(min-width: $md) {
     padding: 48px 40px 24px;
