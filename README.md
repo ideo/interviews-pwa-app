@@ -40,3 +40,5 @@ AWS_URL=
 ## Deployment
 The frontend app is deployred via [netlify](https://netlify.com). It has a backend dependency on a [Craft CMS](https://craftcms.com/) instance hosted on [Hyperlane](https://hyperlane.co).
 
+## Inquiries
+For more information contact [Mani Nilchiani](mnilchiani@ideo.com)
