@@ -1,11 +1,13 @@
 <template>
   <div class="button-toggle d-none d-lg-block">
     <button
-      :class="{ 'is-topics': !isUsers }"
       class="button-toggle__switcher"
       @click.prevent="toggleContent"
     >
-      <div class="button-toggle__switcher-label">
+      <div
+        :class="{ 'is-topics': !isUsers }"
+        class="button-toggle__switcher-label"
+      >
         <img
           v-if="switcherLabelIconUrl !== ''"
           :src="switcherLabelIconUrl"
@@ -18,8 +20,8 @@
 </template>
 
 <script>
-import {SET_CURRENT_MODULE, TOGGLE_SLICK_STATUS} from '../store/actions/status'
-import {mapGetters, mapState} from 'vuex'
+import {SET_CURRENT_MODULE} from '../store/actions/status'
+import {mapState} from 'vuex'
 
 export default {
   name: 'ButtonToggle',
@@ -31,7 +33,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['isUsers']),
     ...mapState({
       isUsers: state => state.status.isUsers
     })
@@ -44,7 +45,6 @@ export default {
   methods: {
     toggleContent () {
       this.$store.commit(SET_CURRENT_MODULE, this.isUsers ? 0 : 1)
-      this.$store.commit(TOGGLE_SLICK_STATUS, 0)
       this.switcherLabelIconUrl = this.isUsers ? '/static/images/icon-user.svg' : '/static/images/icon-star.svg'
     }
   }

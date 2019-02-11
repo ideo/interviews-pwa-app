@@ -12,14 +12,12 @@
 </template>
 
 <script>
-import {OPEN_SHARE_SCREEN} from '../store/actions/status'
-
 export default {
   name: 'ShareButton',
 
   methods: {
     openShareScreen () {
-      this.$store.commit(OPEN_SHARE_SCREEN)
+      this.$eventHub.$emit('IS_SHARE', true)
     }
   }
 }

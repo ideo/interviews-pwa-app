@@ -51,11 +51,10 @@
   transition: transform 200ms ease;
 
   .is-mobile-menu-opened & {
-    //transform: translateY(182px);
-    transform: translateY(166px);
+    transform: translateY(101px);
 
     @media(min-width: 375px) {
-      transform: translateY(224px);
+      transform: translateY(153px);
     }
   }
 }
@@ -63,6 +62,12 @@
 .content__slider {
   height: 100%;
   width: 100%;
+
+  .slick-track {
+    transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+  }
 
   .slick-list,
   .slick-track,
@@ -82,8 +87,12 @@
 
   .slick-slide > div {
     height: 100%;
+    position: relative;
     border-radius: 8px;
-    overflow: hidden;
-    transform: translate3d(0,0,0);
+
+    .is-mobile & {
+      overflow: hidden;
+      transform: translateZ(0);
+    }
   }
 }

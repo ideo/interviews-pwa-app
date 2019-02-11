@@ -4,7 +4,7 @@
   >
     <button
       class="mobile-menu__item"
-      @click.prevent="toggleContent"
+      @click.prevent="closeMenu"
     >
       <span v-if="isUsers">Themes</span>
       <span v-else-if="!isUsers">People</span>
@@ -19,14 +19,13 @@
 </template>
 
 <script>
-import {OPEN_SHARE_SCREEN, TOGGLE_MOBILE_MENU, TOGGLE_SLICK_STATUS, SET_CURRENT_MODULE} from '../store/actions/status'
-import {mapGetters, mapState} from 'vuex'
+import {TOGGLE_MOBILE_MENU, SET_CURRENT_MODULE} from '../store/actions/status'
+import {mapState} from 'vuex'
 
 export default {
   name: 'MobileMenu',
 
   computed: {
-    ...mapGetters(['isUsers']),
     ...mapState({
       isUsers: state => state.status.isUsers
     })
@@ -34,15 +33,14 @@ export default {
 
   methods: {
     openShareScreen () {
-      this.$store.commit(OPEN_SHARE_SCREEN)
+      this.$eventHub.$emit('IS_SHARE', true)
       setTimeout(() => {
         this.$store.commit(TOGGLE_MOBILE_MENU, false)
       }, 400)
     },
 
-    toggleContent () {
+    closeMenu () {
       this.$store.commit(TOGGLE_MOBILE_MENU, false)
-      this.$store.commit(TOGGLE_SLICK_STATUS, 0)
       this.$store.commit(SET_CURRENT_MODULE, this.isUsers ? 0 : 1)
     }
   }

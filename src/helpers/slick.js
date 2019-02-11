@@ -519,7 +519,6 @@ var slick = createCommonjsModule(function (module, exports) {
 
         } else {
 
-          _.applyTransition();
           targetLeft = Math.ceil(targetLeft);
 
           if (_.options.vertical === false) {
@@ -569,25 +568,6 @@ var slick = createCommonjsModule(function (module, exports) {
             target.slideHandler(index, true);
           }
         });
-      }
-
-    };
-
-    Slick.prototype.applyTransition = function(slide) {
-
-      var _ = this,
-        transition = {};
-
-      if (_.options.fade === false) {
-        transition[_.transitionType] = _.transformType + ' ' + _.options.speed + 'ms ' + _.options.cssEase;
-      } else {
-        transition[_.transitionType] = 'opacity ' + _.options.speed + 'ms ' + _.options.cssEase;
-      }
-
-      if (_.options.fade === false) {
-        _.$slideTrack.css(transition);
-      } else {
-        _.$slides.eq(slide).css(transition);
       }
 
     };
@@ -1156,8 +1136,6 @@ var slick = createCommonjsModule(function (module, exports) {
 
       } else {
 
-        _.applyTransition(slideIndex);
-
         _.$slides.eq(slideIndex).css({
           opacity: 1,
           zIndex: _.options.zIndex
@@ -1188,8 +1166,6 @@ var slick = createCommonjsModule(function (module, exports) {
         }, _.options.speed, _.options.easing);
 
       } else {
-
-        _.applyTransition(slideIndex);
 
         _.$slides.eq(slideIndex).css({
           opacity: 0,

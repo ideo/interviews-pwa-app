@@ -8,9 +8,8 @@
   left: 0;
   width: 100%;
   z-index: 10;
-  padding-top: 64px;
-  height: 182px;
-  transform: translateY(-182px);
+  height: 117px;
+  transform: translateY(-117px);
   transition: transform 200ms ease;
   overflow: hidden;
 
@@ -21,9 +20,8 @@
   @media(min-width: 375px) {
     font-size: 48px;
     line-height: 68px;
-    padding-top: 70px;
-    height: 240px;
-    transform: translateY(-240px);
+    height: 169px;
+    transform: translateY(-169px);
   }
 
   @media(min-width: $lg) {
@@ -35,7 +33,10 @@
   display: block;
   width: 100%;
   background-color: transparent;
-  border-top: 1px solid $white;
   color: $white;
   padding: 8px 0;
+
+  & + .mobile-menu__item {
+    border-top: 1px solid $white;
+  }
 }

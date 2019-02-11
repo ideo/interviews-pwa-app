@@ -8,7 +8,6 @@
       <div>
         <form
           class="screen-login__form"
-          action=""
           @submit.prevent="login"
         >
           <label for="password">Password</label>
@@ -22,6 +21,14 @@
             class="screen-login__error"
           >
             The password is incorrect. Try again
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="screen-login__submit"
+            >
+              Enter
+            </button>
           </div>
         </form>
       </div>

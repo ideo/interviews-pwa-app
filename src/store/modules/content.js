@@ -7,8 +7,6 @@ const state = {
   topics: {}
 }
 
-const getters = {}
-
 const actions = {
   [GET_USERS]: ({commit, dispatch}) => {
     return new Promise((resolve, reject) => {
@@ -49,7 +47,6 @@ const mutations = {
 
 export default {
   state,
-  getters,
   actions,
   mutations
 }

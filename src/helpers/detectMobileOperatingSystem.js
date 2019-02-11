@@ -24,10 +24,10 @@ export function getMobileOperatingSystem () {
   return 'unknown'
 }
 
-export function isIpad () {
+export function isIphone () {
   const userAgent = navigator.userAgent
 
-  if (/iPad/.test(userAgent) && !window.MSStream) {
+  if (/iPhone/.test(userAgent) && !window.MSStream) {
     return true
   }
 
