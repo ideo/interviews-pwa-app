@@ -12,7 +12,7 @@
 
 <script>
 import {SET_CURRENT_MODULE} from '../store/actions/status'
-import {mapGetters, mapState} from 'vuex'
+import {mapState} from 'vuex'
 
 export default {
   name: 'Sidebar',
@@ -24,7 +24,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['isUsers']),
     ...mapState({
       isUsers: state => state.status.isUsers
     })

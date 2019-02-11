@@ -1,24 +1,20 @@
 /* eslint-disable promise/param-names */
-import {CLOSE_SHARE_SCREEN, LOGIN, OPEN_SHARE_SCREEN, SET_CURRENT_MODULE, TOGGLE_MOBILE_MENU, TOGGLE_SLICK_STATUS} from '../actions/status'
+import {LOGIN, SET_CURRENT_MODULE, TOGGLE_MOBILE_MENU} from '../actions/status'
 
 const state = {
   isAuth: localStorage.getItem('isAuth') ? parseInt(localStorage.getItem('isAuth')) : 0,
   isUsers: localStorage.getItem('isUsers') ? parseInt(localStorage.getItem('isUsers')) : 1,
   isLoading: false,
-  isShare: false,
-  isMobileMenuOpened: false,
-  slickInited: false
+  isMobileMenuOpened: false
 }
-
-const getters = {}
-
-const actions = {}
 
 const mutations = {
   [LOGIN]: (state, payload) => {
     state.isLoading = true
     state.isAuth = payload
     localStorage.setItem('isAuth', payload)
+
+    // Hide loading
     setTimeout(() => {
       state.isLoading = false
     }, 500)
@@ -27,23 +23,19 @@ const mutations = {
     state.isUsers = payload
     localStorage.setItem('isUsers', payload)
   },
-  [OPEN_SHARE_SCREEN]: (state) => {
-    state.isShare = true
-  },
-  [CLOSE_SHARE_SCREEN]: (state) => {
-    state.isShare = false
-  },
   [TOGGLE_MOBILE_MENU]: (state, payload) => {
-    state.isMobileMenuOpened = payload
-  },
-  [TOGGLE_SLICK_STATUS]: (state, payload) => {
-    state.slickInited = payload
+    if (payload === false) {
+      // Prevent card scroll on Android
+      setTimeout(() => {
+        state.isMobileMenuOpened = payload
+      }, 100)
+    } else {
+      state.isMobileMenuOpened = payload
+    }
   }
 }
 
 export default {
   state,
-  getters,
-  actions,
   mutations
 }

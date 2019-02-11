@@ -42,9 +42,10 @@ $button-toggle-switcher-bg: #5D635F;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  transform: translateY(0px);
 
-  .is-topics & {
-    top: 35px;
+  &.is-topics {
+    transform: translateY(32px);
   }
 }
 

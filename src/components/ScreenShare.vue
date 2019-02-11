@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {CLOSE_SHARE_SCREEN} from '../store/actions/status'
+import {TOGGLE_MOBILE_MENU} from '../store/actions/status'
 
 export default {
   name: 'ScreenShare',
@@ -50,7 +50,8 @@ export default {
 
   methods: {
     closeShareScreen () {
-      this.$store.commit(CLOSE_SHARE_SCREEN)
+      this.$eventHub.$emit('IS_SHARE', false)
+      this.$store.commit(TOGGLE_MOBILE_MENU, false)
     }
   }
 }
