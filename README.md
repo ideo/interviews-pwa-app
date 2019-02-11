@@ -1,4 +1,5 @@
 # Interviews
+This is a Progressive Web App built to share interview videos in the Design Research phase of the project. Initially conceived as an insights sharing tool for project Ziggy in IDEO New York, the goal is to generalize and white-label this project so that it can be used to bvenefit any project.
 
 ## Build Setup
 
