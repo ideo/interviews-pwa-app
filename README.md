@@ -31,4 +31,7 @@ AXIOS_BASE_URL=
 
 # Password
 PASSWORD=
+
+# AWS URL
+AWS_URL=
 ```
